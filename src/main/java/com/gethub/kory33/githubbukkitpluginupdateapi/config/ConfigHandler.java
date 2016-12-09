@@ -21,6 +21,10 @@ public class ConfigHandler {
     
     
     public ConfigHandler(UpdateNotifyPlugin plugin, String configPath){
+        if(!(new File(configPath)).exists()){
+            plugin.saveResource(configPath, false);
+        }
+        
         File file = new File(plugin.getDataFolder(), configPath);
         this.fConfiguration = YamlConfiguration.loadConfiguration(file);
     }
