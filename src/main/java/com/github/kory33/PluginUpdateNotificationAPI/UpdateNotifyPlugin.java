@@ -93,7 +93,9 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
         this.listener = new EventListener(this, this.configHandler);
         super.getServer().getLogger().info("Embedded UpdateNotifyPlugin is enabled for " + getPluginName());
         
-        this.logUpdateStatus();
+        if(configHandler.shouldLogToServer()){
+            this.logUpdateStatus();
+        }
         
         super.onEnable();
     }

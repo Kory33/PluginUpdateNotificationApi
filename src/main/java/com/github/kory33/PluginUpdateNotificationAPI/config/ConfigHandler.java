@@ -14,6 +14,7 @@ import com.github.kory33.PluginUpdateNotificationAPI.UpdateNotifyPlugin;
  */
 public class ConfigHandler {
     private static final String LOG_UP_TO_DATE_PATH = "logUpToDate";
+    private static final String LOG_UPDATES_TO_SERVER = "logUpdatesToServer";
     private static final String UPDATE_CHECK_FREQUENT_PATH = "updateCheckFrequent";
     
     /** Path to the configuration file */
@@ -41,8 +42,15 @@ public class ConfigHandler {
      * Return true, in reference to the configuration file, if the plugin should check for update frequently.
      * @return value of {@value #UPDATE_CHECK_FREQUENT_PATH} in the config file
      */
-    
     public boolean isUpdateCheckFrequent(){
         return this.fConfiguration.getBoolean(UPDATE_CHECK_FREQUENT_PATH, false);
+    }
+    
+    /**
+     * Return true, in reference to the configuration file, if the plugin should log updates to the server console
+     * @return value of {@value #UPDATE_CHECK_FREQUENT_PATH} in the config file
+     */
+    public boolean shouldLogToServer(){
+        return this.fConfiguration.getBoolean(LOG_UPDATES_TO_SERVER, true);
     }
 }
