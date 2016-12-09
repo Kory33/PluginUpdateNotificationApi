@@ -1,5 +1,6 @@
 package com.gethub.kory33.PluginUpdateNotificationAPI.listener;
 
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -20,6 +21,18 @@ public class EventListener implements Listener {
     
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        // TODO implementation
+        Player joinedPlayer = event.getPlayer();
+        
+        if(this.plugin.getUpdateStatus()){
+            joinedPlayer.sendMessage(this.plugin.getUpdatePlayerLogString());
+            return;
+        }
+        
+        if(this.configHandler.shouldLogUpToDate()){
+            joinedPlayer.sendMessage(this.plugin.getUpToDatePlayerLogString());
+            return;
+        }
+        
+        return;
     }
 }

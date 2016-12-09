@@ -26,17 +26,32 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
     
     
     /**
-     * Get the string that will be logged to the server console.
-     * @return string that will be logged to the server console.
+     * Get the string that will be logged to the server console when an update is available.
+     * @return string that will be logged to the server console when an update is available.
      */
     public abstract String getUpdateLogString();
     
     
     /**
-     * Get the string that will be displayed to the players who logged in.
-     * @return string that will be displayed to the players who logged in.
+     * Get the string that will be displayed to the players who logged in when an update is available.
+     * @return string that will be displayed to the players who logged in when an update is available.
      */
     public abstract String getUpdatePlayerLogString();
+    
+    
+    /**
+     * Get the string that will be logged to the server console when the plugin is up-to-date.
+     * @return string that will be logged to the server console when the plugin is up-to-date.
+     */
+    public abstract String getUpToDateLogString();
+    
+    
+    /**
+     * Get the string that will be displayed to the server console when the plugin is up-to-date.
+     * @return string that will be displayed to the server console when the plugin is up-to-date.
+     */
+    public abstract String getUpToDatePlayerLogString();
+    
     
     /**
      * Returns the plugin name that will be displayed to the log
@@ -63,7 +78,12 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
         boolean isUpdated = getUpdateStatus();
         
         if(isUpdated){
-            this.getLogger().info(getUpdateLogString());
+            this.getLogger().info(this.getUpdateLogString());
+            return;
+        }
+        
+        if(this.configHandler.shouldLogUpToDate()){
+            this.getLogger().info(this.getUpToDateLogString());
         }
     };
     
