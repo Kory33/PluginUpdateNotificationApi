@@ -14,19 +14,29 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
     
     private EventListener listener;
     
+    /** if the newer update is available */
+    protected boolean isUpdateAvailable;
+    
     /**
-     * Returns true if the plugin's newer version is released
+     * Returns true if the plugin's newer version is released.
+     * Unlike {@link #getUpdateStatus()}, this method actually checks for the update.
      * @return true if the plugin's newer version is released
      */
-    public abstract boolean getUpdateStatus();
+    public abstract boolean checkForUpdate();
     
     
     /**
      * Get the string that will be logged to the server console.
-     * @return
+     * @return string that will be logged to the server console.
      */
     public abstract String getUpdateLogString();
     
+    
+    /**
+     * Get the string that will be displayed to the players who logged in.
+     * @return string that will be displayed to the players who logged in.
+     */
+    public abstract String getUpdatePlayerLogString();
     
     /**
      * Returns the plugin name that will be displayed to the log
@@ -34,6 +44,17 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
      */
     public abstract String getPluginName();
     
+    /**
+     * Returns true if the plugin's newer version is released.
+     * @return true if the plugin's newer version is released
+     */
+    public boolean getUpdateStatus() {
+        if(this.configHandler.isUpdateCheckFrequent()){
+            this.isUpdateAvailable = this.checkForUpdate();
+        }
+        
+        return this.isUpdateAvailable;
+    }
     
     /**
      * Log the update status to the server console
