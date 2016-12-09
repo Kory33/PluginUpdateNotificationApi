@@ -2,6 +2,7 @@ package com.github.kory33.PluginUpdateNotificationAPI;
 
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.omg.CORBA.PUBLIC_MEMBER;
 
 import com.github.kory33.PluginUpdateNotificationAPI.config.ConfigHandler;
 import com.github.kory33.PluginUpdateNotificationAPI.listener.EventListener;
@@ -15,7 +16,7 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
     private EventListener listener;
     
     /** if the update is available */
-    protected boolean isUpdateAvailable;
+    private boolean isUpdateAvailable;
     
     /**
      * Returns true if the plugin's newer version is released.
