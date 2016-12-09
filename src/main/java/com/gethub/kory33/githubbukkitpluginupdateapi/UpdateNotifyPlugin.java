@@ -2,9 +2,7 @@ package com.gethub.kory33.githubbukkitpluginupdateapi;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-public abstract class GithubUpdateNotifyPlugin extends JavaPlugin {
-    public abstract String getGithubRepositoryUrl(); 
-    
+public abstract class UpdateNotifyPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         // TODO 自動生成されたメソッド・スタブ
