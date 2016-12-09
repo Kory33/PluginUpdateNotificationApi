@@ -10,6 +10,8 @@ public class EventListener implements Listener {
     UpdateNotifyPlugin plugin;
 
     public EventListener(UpdateNotifyPlugin plugin) {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+
         this.plugin = plugin;
     }
     
