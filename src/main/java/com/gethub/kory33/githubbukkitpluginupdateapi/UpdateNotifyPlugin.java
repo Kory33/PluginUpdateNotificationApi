@@ -10,7 +10,8 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
     /** Path to the notification config file */
     public static final String UPDATE_NOTIFICATION_CONFIG_FILEPATH = "update_notification_config.yml";
     
-    private ConfigHandler configHandler;
+    private final ConfigHandler configHandler = new ConfigHandler(this, UPDATE_NOTIFICATION_CONFIG_FILEPATH);
+    
     private EventListener listener;
     
     /**
@@ -48,7 +49,6 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
     
     @Override
     public void onEnable() {
-        this.configHandler = new ConfigHandler(this, UPDATE_NOTIFICATION_CONFIG_FILEPATH);
         this.listener = new EventListener(this, this.configHandler);
         
         super.getServer().getLogger().info("Embedded UpdateNotifyPlugin is enabled for " + getPluginName());
