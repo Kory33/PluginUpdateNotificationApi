@@ -11,9 +11,10 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
     
     
     /**
-     * Log the update status to the server console
+     * Get the string that will be logged to the server console.
+     * @return
      */
-    public abstract void logUpdateStatus();
+    public abstract String getUpdateLogString();
     
     
     /**
@@ -21,6 +22,18 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
      * @return plugin name
      */
     public abstract String getPluginName();
+    
+    
+    /**
+     * Log the update status to the server console
+     */
+    public void logUpdateStatus(){
+        boolean isUpdated = getUpdateStatus();
+        
+        if(isUpdated){
+            this.getLogger().info(getUpdateLogString());
+        }
+    };
     
     
     @Override
