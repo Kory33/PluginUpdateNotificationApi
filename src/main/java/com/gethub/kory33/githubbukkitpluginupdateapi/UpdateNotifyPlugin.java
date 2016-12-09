@@ -9,7 +9,19 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
      */
     public abstract boolean getUpdateStatus();
     
-    public abstract void printUpdateStatus();
+    
+    /**
+     * Log the update status to the server console
+     */
+    public abstract void logUpdateStatus();
+    
+    
+    /**
+     * Returns the plugin name that will be displayed to the log
+     * @return plugin name
+     */
+    public abstract String getPluginName();
+    
     
     @Override
     public void onEnable() {
@@ -22,10 +34,4 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
         super.getServer().getLogger().info("Disabled UpdateNotifyPlugin is disabled for " + getPluginName());
         super.onDisable();
     }
-    
-    /**
-     * Returns the plugin name that will be displayed to the log
-     * @return plugin name
-     */
-    public abstract String getPluginName();
 }
