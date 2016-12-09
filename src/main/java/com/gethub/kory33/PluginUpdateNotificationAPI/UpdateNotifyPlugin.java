@@ -14,7 +14,7 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
     
     private EventListener listener;
     
-    /** if the newer update is available */
+    /** if the update is available */
     protected boolean isUpdateAvailable;
     
     /**
@@ -59,7 +59,7 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
     /**
      * Log the update status to the server console
      */
-    public void logUpdateStatus(){
+    private void logUpdateStatus(){
         boolean isUpdated = getUpdateStatus();
         
         if(isUpdated){
@@ -71,8 +71,10 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         this.listener = new EventListener(this, this.configHandler);
-        
         super.getServer().getLogger().info("Embedded UpdateNotifyPlugin is enabled for " + getPluginName());
+        
+        this.logUpdateStatus();
+        
         super.onEnable();
     }
     
