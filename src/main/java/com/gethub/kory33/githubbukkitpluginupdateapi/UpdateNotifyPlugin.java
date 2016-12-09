@@ -3,6 +3,9 @@ package com.gethub.kory33.githubbukkitpluginupdateapi;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public abstract class UpdateNotifyPlugin extends JavaPlugin {
+    /** Path to the notification config file */
+    public final String UPDATE_NOTIFICATION_CONFIG_FILEPATH = "update_notification_config.yml";
+    
     /**
      * Returns true if the plugin's newer version is released
      * @return true if the plugin's newer version is released
