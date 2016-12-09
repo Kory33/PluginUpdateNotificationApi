@@ -9,6 +9,8 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
      */
     public abstract boolean getUpdateStatus();
     
+    public abstract void printUpdateStatus();
+    
     @Override
     public void onEnable() {
         super.getServer().getLogger().info("Embedded UpdateNotifyPlugin is enabled for " + getPluginName());
