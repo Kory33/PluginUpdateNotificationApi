@@ -1,10 +1,10 @@
-package com.gethub.kory33.PluginUpdateNotificationAPI;
+package com.github.kory33.PluginUpdateNotificationAPI;
 
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.gethub.kory33.PluginUpdateNotificationAPI.config.ConfigHandler;
-import com.gethub.kory33.PluginUpdateNotificationAPI.listener.EventListener;
+import com.github.kory33.PluginUpdateNotificationAPI.config.ConfigHandler;
+import com.github.kory33.PluginUpdateNotificationAPI.listener.EventListener;
 
 public abstract class UpdateNotifyPlugin extends JavaPlugin {
     /** Path to the notification config file */

@@ -1,12 +1,12 @@
-package com.gethub.kory33.PluginUpdateNotificationAPI.listener;
+package com.github.kory33.PluginUpdateNotificationAPI.listener;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import com.gethub.kory33.PluginUpdateNotificationAPI.UpdateNotifyPlugin;
-import com.gethub.kory33.PluginUpdateNotificationAPI.config.ConfigHandler;
+import com.github.kory33.PluginUpdateNotificationAPI.UpdateNotifyPlugin;
+import com.github.kory33.PluginUpdateNotificationAPI.config.ConfigHandler;
 
 public class EventListener implements Listener {
     private UpdateNotifyPlugin plugin;
