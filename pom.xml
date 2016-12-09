@@ -23,10 +23,16 @@
   </repositories>
   <dependencies>
    <dependency>
-     <groupId>org.spigotmc</groupId>
-     <artifactId>spigot-api</artifactId>
-     <version>1.10.2-R0.1-SNAPSHOT</version>
-     <scope>provided</scope>
-     </dependency>
+    <groupId>org.spigotmc</groupId>
+    <artifactId>spigot-api</artifactId>
+    <version>1.10.2-R0.1-SNAPSHOT</version>
+    <scope>provided</scope>
+   </dependency>
+   <!-- https://mvnrepository.com/artifact/org.kohsuke/github-api -->
+   <dependency>
+    <groupId>org.kohsuke</groupId>
+    <artifactId>github-api</artifactId>
+    <version>1.80</version>
+   </dependency>
   </dependencies>
 </project>
