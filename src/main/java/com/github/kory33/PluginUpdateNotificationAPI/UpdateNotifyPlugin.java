@@ -57,7 +57,9 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
      * Returns the plugin name that will be displayed to the log
      * @return plugin name
      */
-    public abstract String getPluginName();
+    public String getPluginName() {
+        return this.getDescription().getName();
+    }
     
     /**
      * Returns true if the plugin's newer version is released.
