@@ -1,8 +1,12 @@
 package com.github.kory33.PluginUpdateNotificationAPI.github;
 
+import java.util.List;
+
 import com.github.kory33.PluginUpdateNotificationAPI.UpdateNotifyPlugin;
 
 public abstract class GithubUpdateNotifyPlugin extends UpdateNotifyPlugin {
+    private final GithubVersionManager gVersionManager = new GithubVersionManager();
+    
     /**
      * <p>
      * This function is expected to return true if the plugin should follow <strong>only version releases.</strong>
@@ -15,31 +19,52 @@ public abstract class GithubUpdateNotifyPlugin extends UpdateNotifyPlugin {
 
     @Override
     public boolean checkForUpdate() {
-        // TODO implementation
+        List<GithubRelease> releases;
+        if(this.followVersions()){
+            releases = this.gVersionManager.getVersionReleases();
+        }else{
+            releases = this.gVersionManager.getReleases();
+        }
+        
+        if(releases.iterator().hasNext()){
+            return true;
+        }
+        
         return false;
     }
-
+    
+    
+    public GithubRelease getLatestRelease(){
+        if(!this.checkForUpdate()){
+            return null;
+        }
+        
+        if(this.followVersions()){
+            return this.gVersionManager.getLatestVersionRelease();
+        }else{
+            return this.gVersionManager.getLatestRelease();
+        }
+    }
+    
     @Override
     public String getUpdateLogString() {
-        // TODO implementation
-        return null;
+        GithubRelease latestRelease = this.getLatestRelease();
+        return "New version available! " + this.getPluginName() + latestRelease.getVersion() + "[" + latestRelease.getLink() + "]";
     }
 
     @Override
     public String getUpdatePlayerLogString() {
-        // TODO implementation
-        return null;
+        GithubRelease latestRelease = this.getLatestRelease();
+        return "New version available! " + this.getPluginName() + latestRelease.getVersion() + "[" + latestRelease.getLink() + "]";
     }
 
     @Override
     public String getUpToDateLogString() {
-        // TODO implementation
-        return null;
+        return this.getPluginName() + " is up-to-date.";
     }
 
     @Override
     public String getUpToDatePlayerLogString() {
-        // TODO implementation
-        return null;
+        return this.getPluginName() + " is up-to-date.";
     }
 }
