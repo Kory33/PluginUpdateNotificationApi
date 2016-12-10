@@ -1,49 +1,21 @@
 package com.github.kory33.PluginUpdateNotificationAPI.github;
 
-import java.util.List;
-
 import com.github.kory33.PluginUpdateNotificationAPI.UpdateNotifyPlugin;
 
 public abstract class GithubUpdateNotifyPlugin extends UpdateNotifyPlugin {
     private final GithubVersionManager gVersionManager = new GithubVersionManager();
     
     /**
-     * <p>
-     * This function is expected to return true if the plugin should follow <strong>only version releases.</strong>
-     * Version releases are the releases which are tagged with version, for instance, 1.0.2 or 0.5.3.2.
-     * <p>
-     * For the release to be considered as "new version", there should be increase in the version number,
-     * and the release must have a tag that matches the following regular expression: ($v?%d(\.%d)*)
+     * Get the reference to the latest version that is released on Github
+     * @return
      */
-    public abstract boolean followVersions();
-
-    @Override
-    public boolean checkForUpdate() {
-        List<GithubRelease> releases;
-        if(this.followVersions()){
-            releases = this.gVersionManager.getVersionReleases();
-        }else{
-            releases = this.gVersionManager.getReleases();
-        }
-        
-        if(releases.iterator().hasNext()){
-            return true;
-        }
-        
-        return false;
+    private GithubRelease getLatestRelease(){
+        return this.gVersionManager.getLatestVersionRelease();
     }
     
-    
-    public GithubRelease getLatestRelease(){
-        if(!this.checkForUpdate()){
-            return null;
-        }
-        
-        if(this.followVersions()){
-            return this.gVersionManager.getLatestVersionRelease();
-        }else{
-            return this.gVersionManager.getLatestRelease();
-        }
+    @Override
+    public boolean checkForUpdate() {
+        return this.getLatestRelease() != null;
     }
     
     @Override
