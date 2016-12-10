@@ -28,8 +28,14 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
      * Unlike {@link #getUpdateStatus()}, this method actually checks for the update.
      * @return true if the plugin's newer version is released
      */
-    public abstract boolean checkForUpdate();
-    
+    public boolean checkForUpdate() {
+        PluginRelease release = this.getLatestRelease();
+        if(release == null){
+            return false;
+        }
+        
+        return release.isNewerThanCurrent();    
+    }
     
     /**
      * Get the string that will be logged to the server console when an update is available.

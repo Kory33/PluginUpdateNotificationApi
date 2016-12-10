@@ -14,15 +14,4 @@ public abstract class GithubUpdateNotifyPlugin extends UpdateNotifyPlugin {
     public PluginRelease getLatestRelease(){
         return this.gVersionManager.getLatestVersionRelease();
     }
-
-    
-    @Override
-    public boolean checkForUpdate() {
-        PluginRelease release = this.getLatestRelease();
-        if(release == null){
-            return false;
-        }
-        
-        return release.isNewerThanCurrent();
-    }
 }
