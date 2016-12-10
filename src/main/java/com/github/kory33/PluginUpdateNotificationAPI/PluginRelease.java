@@ -1,6 +1,6 @@
-package com.github.kory33.PluginUpdateNotificationAPI.github;
+package com.github.kory33.PluginUpdateNotificationAPI;
 
-public class GithubRelease {
+public abstract class PluginRelease {
 
     public String getVersion() {
         // TODO 自動生成されたメソッド・スタブ
@@ -12,4 +12,5 @@ public class GithubRelease {
         return null;
     }
 
+    public abstract boolean isNewerThanCurrent();
 }

@@ -1,5 +1,6 @@
 package com.github.kory33.PluginUpdateNotificationAPI.github;
 
+import com.github.kory33.PluginUpdateNotificationAPI.PluginRelease;
 import com.github.kory33.PluginUpdateNotificationAPI.UpdateNotifyPlugin;
 
 public abstract class GithubUpdateNotifyPlugin extends UpdateNotifyPlugin {
@@ -9,24 +10,29 @@ public abstract class GithubUpdateNotifyPlugin extends UpdateNotifyPlugin {
      * Get the reference to the latest version that is released on Github
      * @return
      */
-    private GithubRelease getLatestRelease(){
+    private PluginRelease getLatestRelease(){
         return this.gVersionManager.getLatestVersionRelease();
     }
     
     @Override
     public boolean checkForUpdate() {
-        return this.getLatestRelease() != null;
+        PluginRelease release = this.getLatestRelease();
+        if(release == null){
+            return false;
+        }
+        
+        return release.isNewerThanCurrent();
     }
     
     @Override
     public String getUpdateLogString() {
-        GithubRelease latestRelease = this.getLatestRelease();
+        PluginRelease latestRelease = this.getLatestRelease();
         return "New version available! " + this.getPluginName() + latestRelease.getVersion() + "[" + latestRelease.getLink() + "]";
     }
 
     @Override
     public String getUpdatePlayerLogString() {
-        GithubRelease latestRelease = this.getLatestRelease();
+        PluginRelease latestRelease = this.getLatestRelease();
         return "New version available! " + this.getPluginName() + latestRelease.getVersion() + "[" + latestRelease.getLink() + "]";
     }
 
