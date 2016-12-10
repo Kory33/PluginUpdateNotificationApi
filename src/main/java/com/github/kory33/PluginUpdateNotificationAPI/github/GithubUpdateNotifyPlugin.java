@@ -10,9 +10,11 @@ public abstract class GithubUpdateNotifyPlugin extends UpdateNotifyPlugin {
      * Get the reference to the latest version that is released on Github
      * @return
      */
-    private PluginRelease getLatestRelease(){
+    @Override
+    public PluginRelease getLatestRelease(){
         return this.gVersionManager.getLatestVersionRelease();
     }
+
     
     @Override
     public boolean checkForUpdate() {
@@ -22,27 +24,5 @@ public abstract class GithubUpdateNotifyPlugin extends UpdateNotifyPlugin {
         }
         
         return release.isNewerThanCurrent();
-    }
-    
-    @Override
-    public String getUpdateLogString() {
-        PluginRelease latestRelease = this.getLatestRelease();
-        return "New version available! " + this.getPluginName() + latestRelease.getVersion() + "[" + latestRelease.getLink() + "]";
-    }
-
-    @Override
-    public String getUpdatePlayerLogString() {
-        PluginRelease latestRelease = this.getLatestRelease();
-        return "New version available! " + this.getPluginName() + latestRelease.getVersion() + "[" + latestRelease.getLink() + "]";
-    }
-
-    @Override
-    public String getUpToDateLogString() {
-        return this.getPluginName() + " is up-to-date.";
-    }
-
-    @Override
-    public String getUpToDatePlayerLogString() {
-        return this.getPluginName() + " is up-to-date.";
     }
 }

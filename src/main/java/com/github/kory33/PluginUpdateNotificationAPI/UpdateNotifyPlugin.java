@@ -18,10 +18,10 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
     private boolean isUpdateAvailable;
     
     /**
-     * Returns the name of the latest plugin version
-     * @return the name of the latest plugin version
+     * Returns a reference to the latest plugin release
+     * @return a reference to the latest plugin release 
      */
-    public abstract String getLatestReleaseVersion();
+    public abstract PluginRelease getLatestRelease();
     
     /**
      * Returns true if the plugin's newer version is released.
@@ -35,28 +35,38 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
      * Get the string that will be logged to the server console when an update is available.
      * @return string that will be logged to the server console when an update is available.
      */
-    public abstract String getUpdateLogString();
+    public String getUpdateLogString() {
+        PluginRelease latestRelease = this.getLatestRelease();
+        return "New version available! " + this.getPluginName() + latestRelease.getVersion() + "[" + latestRelease.getLink() + "]";
+    }
     
     
     /**
      * Get the string that will be displayed to the players who logged in when an update is available.
      * @return string that will be displayed to the players who logged in when an update is available.
      */
-    public abstract String getUpdatePlayerLogString();
+    public String getUpdatePlayerLogString() {
+        PluginRelease latestRelease = this.getLatestRelease();
+        return "New version available! " + this.getPluginName() + latestRelease.getVersion() + "[" + latestRelease.getLink() + "]";
+    }
     
     
     /**
      * Get the string that will be logged to the server console when the plugin is up-to-date.
      * @return string that will be logged to the server console when the plugin is up-to-date.
      */
-    public abstract String getUpToDateLogString();
+    public String getUpToDateLogString() {
+        return this.getPluginName() + " is up-to-date.";
+    }
     
     
     /**
      * Get the string that will be displayed to the server console when the plugin is up-to-date.
      * @return string that will be displayed to the server console when the plugin is up-to-date.
      */
-    public abstract String getUpToDatePlayerLogString();
+    public String getUpToDatePlayerLogString() {
+        return this.getPluginName() + " is up-to-date.";
+    }
     
     
     /**
