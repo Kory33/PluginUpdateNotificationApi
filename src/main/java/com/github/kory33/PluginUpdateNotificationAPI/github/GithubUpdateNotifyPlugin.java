@@ -14,4 +14,10 @@ public abstract class GithubUpdateNotifyPlugin extends UpdateNotifyPlugin {
     public PluginRelease getLatestRelease(){
         return this.gVersionManager.getLatestVersionRelease();
     }
+    
+    /**
+     * Return the repository location in a format of [owner]/[repository]
+     * @return
+     */
+    public abstract String getGithubRepository();
 }
