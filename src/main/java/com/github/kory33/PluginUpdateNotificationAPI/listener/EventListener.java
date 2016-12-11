@@ -21,9 +21,22 @@ public class EventListener implements Listener {
     
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
-        Player joinedPlayer = event.getPlayer();
+        if(this.configHandler.isUpdateCheckFrequent()){
+            this.plugin.updateUpdateRelease();
+        }
         
-        if(this.plugin.getUpdateStatus()){
+        this.sendUpdateStatus(event.getPlayer(), this.plugin.getUpdateStatus());
+        
+        return;
+    }
+    
+    /**
+     * Send the update status to the player who has joined the server
+     * @param joinedPlayer
+     * @param isUpdated
+     */
+    private void sendUpdateStatus(Player joinedPlayer, boolean isUpdated){
+        if(isUpdated){
             joinedPlayer.sendMessage(this.plugin.getUpdatePlayerLogString());
             return;
         }
@@ -32,7 +45,5 @@ public class EventListener implements Listener {
             joinedPlayer.sendMessage(this.plugin.getUpToDatePlayerLogString());
             return;
         }
-        
-        return;
     }
 }
