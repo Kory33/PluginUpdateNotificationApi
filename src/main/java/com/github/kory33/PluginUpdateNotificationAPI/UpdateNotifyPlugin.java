@@ -14,8 +14,7 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
     
     private EventListener listener;
     
-    /** if the update is available */
-    private boolean isUpdateAvailable;
+    private PluginRelease latestRelease;
     
     /**
      * Returns a reference to the latest plugin release
@@ -24,26 +23,12 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
     public abstract PluginRelease getLatestRelease();
     
     /**
-     * Returns true if the plugin's newer version is released.
-     * Unlike {@link #getUpdateStatus()}, this method actually checks for the update.
-     * @return true if the plugin's newer version is released
-     */
-    public boolean checkForUpdate() {
-        PluginRelease release = this.getLatestRelease();
-        if(release == null){
-            return false;
-        }
-        
-        return release.isNewerThanCurrent(this);    
-    }
-    
-    /**
      * Get the string that will be logged to the server console when an update is available.
      * @return string that will be logged to the server console when an update is available.
      */
     public String getUpdateLogString() {
-        PluginRelease latestRelease = this.getLatestRelease();
-        return "New version available! " + this.getPluginName() + latestRelease.getVersion() + "[" + latestRelease.getLink() + "]";
+        return "New version available! " + this.getPluginName() + this.latestRelease.getVersion()
+             + "[" + this.latestRelease.getLink() + "]";
     }
     
     
@@ -52,8 +37,8 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
      * @return string that will be displayed to the players who logged in when an update is available.
      */
     public String getUpdatePlayerLogString() {
-        PluginRelease latestRelease = this.getLatestRelease();
-        return "New version available! " + this.getPluginName() + latestRelease.getVersion() + "[" + latestRelease.getLink() + "]";
+        return "New version available! " + this.getPluginName() + this.latestRelease.getVersion()
+             + "[" + this.latestRelease.getLink() + "]";
     }
     
     
@@ -88,20 +73,22 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
      * @return true if the plugin's newer version is released
      */
     public boolean getUpdateStatus() {
-        if(this.configHandler.isUpdateCheckFrequent()){
-            this.isUpdateAvailable = this.checkForUpdate();
-        }
-        
-        return this.isUpdateAvailable;
+        return this.latestRelease != null && this.latestRelease.isNewerThanCurrent(this);
     }
+
+    /**
+     * Update the internal cache of the latest release.
+     */
+    public void updateUpdateRelease(){
+        this.latestRelease = getLatestRelease();
+    }
+    
     
     /**
      * Log the update status to the server console
      */
     private void logUpdateStatus(){
-        boolean isUpdated = getUpdateStatus();
-        
-        if(isUpdated){
+        if(this.getUpdateStatus()){
             this.getLogger().info(this.getUpdateLogString());
             return;
         }
@@ -111,11 +98,12 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
         }
     };
     
-    
     @Override
     public void onEnable() {
         this.listener = new EventListener(this, this.configHandler);
         super.getServer().getLogger().info("Embedded UpdateNotifyPlugin is enabled for " + getPluginName());
+        
+        updateUpdateRelease();
         
         if(this.configHandler.shouldLogToServer()){
             this.logUpdateStatus();
