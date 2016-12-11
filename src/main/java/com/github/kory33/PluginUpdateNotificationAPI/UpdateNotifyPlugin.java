@@ -34,7 +34,7 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
             return false;
         }
         
-        return release.isNewerThanCurrent();    
+        return release.isNewerThanCurrent(this);    
     }
     
     /**

@@ -4,7 +4,7 @@ import com.github.kory33.PluginUpdateNotificationAPI.PluginRelease;
 import com.github.kory33.PluginUpdateNotificationAPI.UpdateNotifyPlugin;
 
 public abstract class GithubUpdateNotifyPlugin extends UpdateNotifyPlugin {
-    private final GithubVersionManager gVersionManager = new GithubVersionManager();
+    private final GithubVersionManager gVersionManager = new GithubVersionManager(this);
     
     /**
      * Get the reference to the latest version that is released on Github

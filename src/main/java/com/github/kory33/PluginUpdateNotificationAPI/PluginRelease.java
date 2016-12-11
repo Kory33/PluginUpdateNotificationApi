@@ -17,5 +17,5 @@ public abstract class PluginRelease {
         return linkURL;
     }
 
-    public abstract boolean isNewerThanCurrent();
+    public abstract boolean isNewerThanCurrent(UpdateNotifyPlugin plugin);
 }
