@@ -6,6 +6,21 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.github.kory33.UpdateNotificationPlugin.config.ConfigHandler;
 import com.github.kory33.UpdateNotificationPlugin.listener.EventListener;
 
+/**
+ * The class that represents a bukkit Java plugin.
+ * This class features automated update check and logging.
+ * 
+ * To modify the string that will be shown to the server log, override:
+ * {@link #getUpdateLogString()}
+ * {@link #getUpToDateLogString()}
+ * 
+ * To modify the string that will be shown to the player, override:
+ * {@link #getUpdatePlayerLogString()}
+ * {@link #getUpToDatePlayerLogString()}
+ * 
+ * @author Kory33
+ *
+ */
 public abstract class UpdateNotificationPlugin extends JavaPlugin {
     /** Path to the notification config file */
     public static final String UPDATE_NOTIFICATION_CONFIG_FILEPATH = "update_notification_config.yml";
@@ -74,11 +89,19 @@ public abstract class UpdateNotificationPlugin extends JavaPlugin {
     }
     
     /**
+     * Get the version of the plugin
+     * @return the version of the plugin
+     */
+    public String getVersionString() {
+        return this.getDescription().getVersion();
+    }
+    
+    /**
      * Returns true if the plugin's newer version is released.
      * @return true if the plugin's newer version is released
      */
     public boolean getUpdateStatus() {
-        return this.latestRelease != null && this.latestRelease.isNewerThanCurrent(this);
+        return this.latestRelease != null && this.latestRelease.getVersion().isNewerThan(this.getVersionString());
     }
     
     /**

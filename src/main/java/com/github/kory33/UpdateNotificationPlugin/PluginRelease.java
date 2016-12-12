@@ -17,7 +17,7 @@ public class PluginRelease {
         return linkURL;
     }
 
-    public boolean isNewerThanCurrent(PluginVersion currentVersion){
-        return this.version.newerThan(currentVersion);
+    public PluginVersion getVersion(){
+        return this.version;
     };
 }

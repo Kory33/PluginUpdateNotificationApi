@@ -1,12 +1,21 @@
 package com.github.kory33.UpdateNotificationPlugin;
 
-public class PluginVersion {
-    public PluginVersion(String versionString){
-        // TODO implementation
+public abstract class PluginVersion {
+    private final String versionString;
+    
+    protected PluginVersion(String versionString) {
+        this.versionString = versionString;
     }
-
-    public boolean newerThan(PluginVersion currentVersion) {
-        // TODO 自動生成されたメソッド・スタブ
-        return false;
+    
+    /**
+     * returns if this version is newer than a version that corresponds to the given string
+     * @param versionString version string to compare with
+     * @return if this version is newer than the given version
+     */
+    public abstract boolean isNewerThan(String versionString);
+    
+    @Override
+    public String toString() {
+        return this.versionString;
     }
 }
