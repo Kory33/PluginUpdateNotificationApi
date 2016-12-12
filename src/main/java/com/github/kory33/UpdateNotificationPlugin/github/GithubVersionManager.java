@@ -8,6 +8,12 @@ public class GithubVersionManager {
         this.plugin = plugin;
     }
     
+    /**
+     * Get the latest version release.
+     * <p>
+     * This method is <strong>synchronous</strong>.
+     * @return reference to the latest version release
+     */
     public PluginRelease getLatestVersionRelease() {
         // TODO 自動生成されたメソッド・スタブ
         return null;
