@@ -1,11 +1,11 @@
-package com.github.kory33.PluginUpdateNotificationAPI.config;
+package com.github.kory33.UpdateNotificationPlugin.config;
 
 import java.io.File;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import com.github.kory33.PluginUpdateNotificationAPI.UpdateNotifyPlugin;
+import com.github.kory33.UpdateNotificationPlugin.UpdateNotificationPlugin;
 
 /**
  * Bukkit-configuration handler
@@ -21,7 +21,7 @@ public class ConfigHandler {
     private final FileConfiguration fConfiguration;
     
     
-    public ConfigHandler(UpdateNotifyPlugin plugin, String configPath){
+    public ConfigHandler(UpdateNotificationPlugin plugin, String configPath){
         if(!(new File(configPath)).exists()){
             plugin.saveResource(configPath, false);
         }

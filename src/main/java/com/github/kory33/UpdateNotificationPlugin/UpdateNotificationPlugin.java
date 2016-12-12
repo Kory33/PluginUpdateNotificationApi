@@ -1,12 +1,12 @@
-package com.github.kory33.PluginUpdateNotificationAPI;
+package com.github.kory33.UpdateNotificationPlugin;
 
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.github.kory33.PluginUpdateNotificationAPI.config.ConfigHandler;
-import com.github.kory33.PluginUpdateNotificationAPI.listener.EventListener;
+import com.github.kory33.UpdateNotificationPlugin.config.ConfigHandler;
+import com.github.kory33.UpdateNotificationPlugin.listener.EventListener;
 
-public abstract class UpdateNotifyPlugin extends JavaPlugin {
+public abstract class UpdateNotificationPlugin extends JavaPlugin {
     /** Path to the notification config file */
     public static final String UPDATE_NOTIFICATION_CONFIG_FILEPATH = "update_notification_config.yml";
     
@@ -32,7 +32,7 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
      * @return string that will be logged to the server console when an update is available.
      */
     public String getUpdateLogString() {
-        return "New version available! " + this.getPluginName() + this.latestRelease.getVersion()
+        return "New version available! " + this.getPluginName() + this.latestRelease.getVersionString()
              + "[" + this.latestRelease.getLink() + "]";
     }
     
@@ -42,7 +42,7 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
      * @return string that will be displayed to the players who logged in when an update is available.
      */
     public String getUpdatePlayerLogString() {
-        return "New version available! " + this.getPluginName() + this.latestRelease.getVersion()
+        return "New version available! " + this.getPluginName() + this.latestRelease.getVersionString()
              + "[" + this.latestRelease.getLink() + "]";
     }
     

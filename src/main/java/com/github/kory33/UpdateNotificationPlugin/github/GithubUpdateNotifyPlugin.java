@@ -1,8 +1,8 @@
-package com.github.kory33.PluginUpdateNotificationAPI.github;
+package com.github.kory33.UpdateNotificationPlugin.github;
 
-import com.github.kory33.PluginUpdateNotificationAPI.UpdateNotifyPlugin;
+import com.github.kory33.UpdateNotificationPlugin.UpdateNotificationPlugin;
 
-public abstract class GithubUpdateNotifyPlugin extends UpdateNotifyPlugin {
+public abstract class GithubUpdateNotifyPlugin extends UpdateNotificationPlugin {
     private final GithubVersionManager gVersionManager = new GithubVersionManager(this);
     
     @Override
