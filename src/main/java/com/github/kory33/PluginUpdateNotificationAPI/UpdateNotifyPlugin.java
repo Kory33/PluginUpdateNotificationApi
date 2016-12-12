@@ -22,7 +22,7 @@ public abstract class UpdateNotifyPlugin extends JavaPlugin {
     public abstract void updateReleaseCacheSync();
     
     /**
-     * Update the release cache(latestRelease member) <strong>synchronously</strong>.
+     * Update the release cache(latestRelease member) <strong>asynchronously</strong>.
      * Additionally, this method is expected to call EventListener's sendUpdateStatus method.
      */
     public abstract void updateReleaseCacheAsync();
