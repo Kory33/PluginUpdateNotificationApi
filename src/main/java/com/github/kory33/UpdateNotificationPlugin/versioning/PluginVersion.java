@@ -1,4 +1,4 @@
-package com.github.kory33.UpdateNotificationPlugin;
+package com.github.kory33.UpdateNotificationPlugin.versioning;
 
 public abstract class PluginVersion {
     private final String versionString;

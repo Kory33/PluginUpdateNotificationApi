@@ -1,5 +1,7 @@
 package com.github.kory33.UpdateNotificationPlugin;
 
+import com.github.kory33.UpdateNotificationPlugin.versioning.PluginVersion;
+
 public class PluginRelease {
     private final PluginVersion version;
     private final String linkURL;
