@@ -15,11 +15,11 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.github.kory33.UpdateNotificationPlugin.PluginRelease;
 import com.github.kory33.UpdateNotificationPlugin.versioning.PluginVersion;
 import com.github.kory33.UpdateNotificationPlugin.versioning.SemanticPluginVersion;
-import com.google.common.base.Throwables;
 
 public class GithubVersionManager {
     private final GithubUpdateNotifyPlugin plugin;
@@ -28,14 +28,19 @@ public class GithubVersionManager {
     }
     
     /**
-     * Get the latest version release.
-     * <p>
-     * This method is <strong>synchronous</strong>.
+     * Get the latest version release. 
      * @return reference to the latest version release
+     * @throws IOException 
+     * @throws ClientProtocolException 
+     * @throws JSONException 
      */
-    public PluginRelease getLatestVersionRelease() {
+    public PluginRelease getLatestVersionRelease() throws JSONException, ClientProtocolException, IOException {
+        List<PluginRelease> releaseList = this.getReleasesList();
+        if (releaseList.isEmpty()) {
+            return null;
+        }
         
-        return null;
+        return releaseList.get(0);
     }
     
     /**
@@ -75,12 +80,28 @@ public class GithubVersionManager {
         return stringBuilder.toString();
     }
     
-    private List<PluginVersion> getVersionsList() throws JSONException, ClientProtocolException, IOException{
-        JSONArray jsonArray = new JSONArray(this.getReleaseJSONString());
+    /**
+     * Get the plugin-release's list.
+     * <p>
+     * This method involves downloading data from Github.
+     * @return list of releases
+     * @throws JSONException
+     * @throws ClientProtocolException
+     * @throws IOException
+     */
+    public List<PluginRelease> getReleasesList() throws JSONException, ClientProtocolException, IOException{
+        JSONArray releaseJsonArray = new JSONArray(this.getReleaseJSONString());
         
-        List<PluginVersion> versionList= new ArrayList<>();
+        List<PluginRelease> versionList= new ArrayList<>();
         
-        // TODO implementation
+        for(int i = 0; i < releaseJsonArray.length(); i++) {
+            JSONObject releaseJson = releaseJsonArray.getJSONObject(i);
+            try{
+                PluginVersion releaseVersion = new SemanticPluginVersion(releaseJson.getString("tag_name"));
+                String releaseHTMLUrl = releaseJson.getString("html_url");
+                versionList.add(new PluginRelease(releaseVersion, releaseHTMLUrl));
+            }catch(Exception e){}
+        }
         
         return versionList;
     }
