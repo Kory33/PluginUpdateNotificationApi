@@ -67,6 +67,7 @@ public class SemanticPluginVersion extends PluginVersion{
         return !this.buildMetadata.equals("");
     }
     
+   
     @Override
     public boolean isNewerThan(String versionString) {
     	SemanticPluginVersion version = new SemanticPluginVersion(versionString);
@@ -96,6 +97,5 @@ public class SemanticPluginVersion extends PluginVersion{
     				
     	return version_1.length > version_2.length ? false:true;
     		
-    	
     }
 }
