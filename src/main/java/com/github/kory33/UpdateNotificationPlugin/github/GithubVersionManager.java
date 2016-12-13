@@ -22,6 +22,11 @@ import com.github.kory33.UpdateNotificationPlugin.PluginRelease;
 import com.github.kory33.UpdateNotificationPlugin.versioning.PluginVersion;
 import com.github.kory33.UpdateNotificationPlugin.versioning.SemanticPluginVersion;
 
+/**
+ * 
+ * @author Kory33
+ *
+ */
 public class GithubVersionManager {
     private final GithubUpdateNotifyPlugin plugin;
     public GithubVersionManager(GithubUpdateNotifyPlugin plugin){
@@ -29,7 +34,9 @@ public class GithubVersionManager {
     }
     
     /**
-     * Get the latest version release. 
+     * Get the latest version release.
+     * This method does not have any modification of the member variable,
+     * therefore it may be called from multiple threads.
      * @return reference to the latest version release
      * @throws IOException 
      * @throws ClientProtocolException 
@@ -60,6 +67,12 @@ public class GithubVersionManager {
         return "https://api.github.com/repos/" + this.plugin.getGithubRepository() + "/releases";
     }
     
+    /**
+     * Access to the Github API and get the release data.
+     * @return string data received from github api
+     * @throws ClientProtocolException
+     * @throws IOException
+     */
     private String getReleaseJSONString() throws ClientProtocolException, IOException {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpGet httpGetMethod = new HttpGet(this.getGHReleaseAPIUrl());
@@ -90,6 +103,37 @@ public class GithubVersionManager {
     }
     
     /**
+     * Generate PluginRelease instance from JSONObject.
+     * <p>
+     * If the JSONObject does not have version string in "tag_name" and url in "html_url",
+     * or the version is invalid, this method returns null
+     * @param releaseJson
+     * @return instance of PluginRelease
+     */
+    private PluginRelease getPluginReleaseFromJSON(JSONObject releaseJson) {
+        String versionString = null, releaseHTMLUrl = null;
+        try{
+            versionString = releaseJson.getString("tag_name");
+            releaseHTMLUrl = releaseJson.getString("html_url");
+        }catch(JSONException e){
+            this.plugin.getLogger().log(
+                    Level.WARNING, "Caught exception while parsing JSON. Data might be corrupted while being transmitted.", e
+            );
+            return null;
+        }
+        
+        try{
+            PluginVersion releaseVersion = new SemanticPluginVersion(versionString);
+            return new PluginRelease(releaseVersion, releaseHTMLUrl);
+        }catch (IllegalArgumentException e) {
+            this.plugin.getLogger().log(
+                    Level.WARNING, "Version " + versionString + " was found, but was ignored."
+            );
+            return null;
+        }
+    }
+    
+    /**
      * Get the plugin-release's list.
      * <p>
      * This method involves downloading data from Github.
@@ -101,21 +145,20 @@ public class GithubVersionManager {
     public List<PluginRelease> getReleasesList() throws JSONException, ClientProtocolException, IOException{
         JSONArray releaseJsonArray = new JSONArray(this.getReleaseJSONString());
         
-        List<PluginRelease> versionList= new ArrayList<>();
+        List<PluginRelease> releaseList = new ArrayList<>();
         
         for(int i = 0; i < releaseJsonArray.length(); i++) {
             JSONObject releaseJson = releaseJsonArray.getJSONObject(i);
-            try{
-                PluginVersion releaseVersion = new SemanticPluginVersion(releaseJson.getString("tag_name"));
-                String releaseHTMLUrl = releaseJson.getString("html_url");
-                versionList.add(new PluginRelease(releaseVersion, releaseHTMLUrl));
-            }catch(JSONException e){
-                this.plugin.getLogger().log(
-                        Level.WARNING, "Caught exception while parsing JSON. Data might be corrupted while being transmitted.", e
-                );
+            
+            PluginRelease release = this.getPluginReleaseFromJSON(releaseJson);
+            
+            if(release == null){
+                continue;
             }
+            
+            releaseList.add(release);
         }
         
-        return versionList;
+        return releaseList;
     }
 }
