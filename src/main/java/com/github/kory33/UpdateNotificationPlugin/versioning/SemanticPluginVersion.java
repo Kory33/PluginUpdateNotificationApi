@@ -1,4 +1,7 @@
 package com.github.kory33.UpdateNotificationPlugin.versioning;
+
+import org.apache.commons.lang.math.NumberUtils;
+
 /**
  * Class that represents the semantic versioning of the plugin.
  * <p>
@@ -35,7 +38,7 @@ public class SemanticPluginVersion extends PluginVersion{
         buildMetadata = null;
         
         if(split_versionString[3].isEmpty())return;
-        int identifier_pos = versionString.indexOf("-");
+        int identifier_pos = versionString.indexOf("\\-");
         
         if(identifier_pos == -1){
         	buildMetadata = split_versionString[3].substring(1, split_versionString[3].length());
@@ -71,31 +74,26 @@ public class SemanticPluginVersion extends PluginVersion{
     @Override
     public boolean isNewerThan(String versionString) {
     	SemanticPluginVersion version = new SemanticPluginVersion(versionString);
-    	if(version.major != major)return version.major > major ? true:false;
-    	if(version.minor != minor)return version.minor > minor ? true:false;
-    	if(version.patch != patch)return version.patch > patch ? true:false;
+    	if(version.major != major)return version.major < major;
+    	if(version.minor != minor)return version.minor < minor;
+    	if(version.patch != patch)return version.patch < patch;
     	String[] version_1 = identifier.split("\\.") ;
         String[] version_2 = version.identifier.split("\\.");
     	int lim =version_1.length > version_2.length ?version_2.length : version_1.length;
-    	if(lim ==0)return version_1.length == 0 ?true : false;
+    	if(lim ==0)return version_1.length == 0;
     	for(int i = 0; i < lim; i++){
-    	    int r  = 0;
+    		boolean r = false;
     	    int compare = version_1[i].compareTo(version_2[i]);
-			if(compare != 0) r = compare < 0 ? 1 : -1;
-    		boolean check = false;
-				try {
-    			      int compare1 =Integer.parseInt(version_1[i]);
-    				  check =true;
-    				  int compare2 =Integer.parseInt(version_2[i]);
-    				  if(compare1 != compare2) r = compare1 > compare2 ? 1:-1; 
-    					   
-    				 } catch (NumberFormatException e) {
-    				  r = check == false ? 1 : -1;
-    				 }
-    		   if(r!=0)return r>0?true:false;
-    	  }
-    				
-    	return version_1.length > version_2.length ? false:true;
-    		
+			if(compare != 0) r = compare < 0;
+			else continue;
+			if (NumberUtils.isNumber(version_1[i])!=NumberUtils.isNumber(version_2[i]))return NumberUtils.isNumber(version_1[i]) == false; 
+			else if(NumberUtils.isNumber(version_1[i]) == true){
+                 int compare1 =Integer.parseInt(version_1[i]);
+    			 int compare2 =Integer.parseInt(version_2[i]);
+    			 if(compare1 != compare2) return  compare1 > compare2; 	   
+			}
+			else return r;
+    	}
+    	return version.identifier.length() < identifier.length() ;
     }
 }
