@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -34,8 +35,16 @@ public class GithubVersionManager {
      * @throws ClientProtocolException 
      * @throws JSONException 
      */
-    public PluginRelease getLatestVersionRelease() throws JSONException, ClientProtocolException, IOException {
-        List<PluginRelease> releaseList = this.getReleasesList();
+    public PluginRelease getLatestVersionRelease(){
+        List<PluginRelease> releaseList = null;
+
+        try{
+            releaseList = this.getReleasesList();
+        } catch (Exception e) {
+            this.plugin.getLogger().log(Level.WARNING, "Caught exceptions while fetching and parsing data from Github:\n" + e.getMessage());
+            return null;
+        }
+        
         if (releaseList.isEmpty()) {
             return null;
         }
