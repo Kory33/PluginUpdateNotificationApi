@@ -42,7 +42,7 @@ public class SemanticPluginVersion extends PluginVersion{
             return;
         }
         String sub_identifier = versionString.substring( identifier_pos +1, versionString.length());
-        String[] split_identifier = sub_identifier.split("+",2);
+        String[] split_identifier = sub_identifier.split("\\+",2);
         if(!split_identifier[0].isEmpty())identifier = split_identifier[0];
         if(!split_identifier[1].isEmpty())buildMetadata = split_identifier[1];
         return;
