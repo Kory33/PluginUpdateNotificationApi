@@ -32,15 +32,9 @@ public abstract class UpdateNotificationPlugin extends JavaPlugin {
     private PluginRelease latestRelease;
     
     /**
-     * Update the release cache(latestRelease member) <strong>synchronously</strong>.
+     * Update the release cache(latestRelease member)
      */
-    public abstract void updateReleaseCacheSync();
-    
-    /**
-     * Update the release cache(latestRelease member) <strong>asynchronously</strong>.
-     * Additionally, this method is expected to call EventListener's sendUpdateStatus method.
-     */
-    public abstract void updateReleaseCacheAsync();
+    public abstract void updateReleaseCache();
     
     /**
      * Get the string that will be logged to the server console when an update is available.
@@ -131,7 +125,7 @@ public abstract class UpdateNotificationPlugin extends JavaPlugin {
         this.listener = new EventListener(this, this.configHandler);
         super.getServer().getLogger().info("Embedded UpdateNotifyPlugin is enabled for " + getPluginName());
         
-        updateReleaseCacheSync();
+        updateReleaseCache();
         
         if(this.configHandler.shouldLogToServer()){
             this.logUpdateStatus();

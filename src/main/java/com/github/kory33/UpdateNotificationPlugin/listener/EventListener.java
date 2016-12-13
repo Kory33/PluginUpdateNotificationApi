@@ -21,10 +21,12 @@ public class EventListener implements Listener {
     
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
+        Player joinedPlayer = event.getPlayer();
+        
         if(this.configHandler.isUpdateCheckFrequent()){
-            this.plugin.updateReleaseCacheAsync();
+            
         }else{
-            this.sendUpdateStatus(event.getPlayer(), this.plugin.getUpdateStatus());
+            this.sendUpdateStatus(joinedPlayer, this.plugin.getUpdateStatus());
         }
         
         return;

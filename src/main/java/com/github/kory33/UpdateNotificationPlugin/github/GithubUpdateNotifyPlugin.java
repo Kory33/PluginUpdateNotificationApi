@@ -6,14 +6,9 @@ public abstract class GithubUpdateNotifyPlugin extends UpdateNotificationPlugin 
     private final GithubVersionManager gVersionManager = new GithubVersionManager(this);
     
     @Override
-    public void updateReleaseCacheSync(){
+    public void updateReleaseCache(){
         this.updateReleaseCache(this.gVersionManager.getLatestVersionRelease());
     }
-    
-    @Override
-    public void updateReleaseCacheAsync() {
-        // TODO implementation
-    };
     
     /**
      * Return the repository location in a format of [owner]/[repository]
