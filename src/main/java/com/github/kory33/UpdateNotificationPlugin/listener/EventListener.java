@@ -26,7 +26,7 @@ public class EventListener implements Listener {
         if(this.configHandler.isUpdateCheckFrequent()){
             
         }else{
-            this.sendUpdateStatus(joinedPlayer, this.plugin.getUpdateStatus());
+            this.sendUpdateStatus(joinedPlayer);
         }
         
         return;
@@ -37,8 +37,8 @@ public class EventListener implements Listener {
      * @param joinedPlayer
      * @param isUpdated
      */
-    private void sendUpdateStatus(Player joinedPlayer, boolean isUpdated){
-        if(isUpdated){
+    private void sendUpdateStatus(Player joinedPlayer){
+        if(this.plugin.getUpdateStatus()){
             joinedPlayer.sendMessage(this.plugin.getUpdatePlayerLogString());
             return;
         }
