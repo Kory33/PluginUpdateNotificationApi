@@ -41,7 +41,7 @@ public class GithubVersionManager {
         try{
             releaseList = this.getReleasesList();
         } catch (Exception e) {
-            this.plugin.getLogger().log(Level.WARNING, "Caught exceptions while fetching and parsing data from Github:\n" + e.getMessage());
+            this.plugin.getLogger().log(Level.WARNING, "Caught exceptions while fetching and parsing data from Github:", e);
             return null;
         }
         
@@ -109,7 +109,11 @@ public class GithubVersionManager {
                 PluginVersion releaseVersion = new SemanticPluginVersion(releaseJson.getString("tag_name"));
                 String releaseHTMLUrl = releaseJson.getString("html_url");
                 versionList.add(new PluginRelease(releaseVersion, releaseHTMLUrl));
-            }catch(Exception e){}
+            }catch(JSONException e){
+                this.plugin.getLogger().log(
+                        Level.WARNING, "Caught exception while parsing JSON. Data might be corrupted while being transmitted.", e
+                );
+            }
         }
         
         return versionList;
