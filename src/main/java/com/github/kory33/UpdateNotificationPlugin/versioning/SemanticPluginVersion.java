@@ -1,7 +1,5 @@
 package com.github.kory33.UpdateNotificationPlugin.versioning;
 
-import org.apache.commons.lang.math.NumberUtils;
-
 /**
  * Class that represents the semantic versioning of the plugin.
  * <p>
