@@ -114,6 +114,9 @@ public class GithubVersionManager {
         String versionString = null, releaseHTMLUrl = null;
         try{
             versionString = releaseJson.getString("tag_name");
+            //remove non-number characters at the beginning of the version string
+            versionString = versionString.replace("[^0-9]", "");
+            
             releaseHTMLUrl = releaseJson.getString("html_url");
         }catch(JSONException e){
             this.plugin.getLogger().log(
