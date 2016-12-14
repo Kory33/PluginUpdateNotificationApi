@@ -77,6 +77,9 @@ public class GithubVersionManager {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpGet httpGetMethod = new HttpGet(this.getGHReleaseAPIUrl());
         
+        // add user agent header
+        httpGetMethod.setHeader("User-Agent", "Update-Notification-Plugin--Github-Version-Manager");
+        
         // Execute the http get method and gain the response from the server
         HttpResponse response = httpClient.execute(httpGetMethod);
         
