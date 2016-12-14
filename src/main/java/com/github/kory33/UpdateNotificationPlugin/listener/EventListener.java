@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.scheduler.BukkitScheduler;
 
 import com.github.kory33.UpdateNotificationPlugin.UpdateNotificationPlugin;
 import com.github.kory33.UpdateNotificationPlugin.config.ConfigHandler;
@@ -24,7 +25,19 @@ public class EventListener implements Listener {
         Player joinedPlayer = event.getPlayer();
         
         if(this.configHandler.isUpdateCheckFrequent()){
-            
+            BukkitScheduler scheduler = this.plugin.getServer().getScheduler();
+            scheduler.runTaskAsynchronously(this.plugin, new Runnable() {
+                @Override
+                public void run() {
+                    plugin.updateReleaseCache();
+                    scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {
+                        @Override
+                        public void run() {
+                            EventListener.this.sendUpdateStatus(joinedPlayer);
+                        }
+                    });
+                }
+            });
         }else{
             this.sendUpdateStatus(joinedPlayer);
         }
