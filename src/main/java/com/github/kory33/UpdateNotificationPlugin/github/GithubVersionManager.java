@@ -18,7 +18,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.github.kory33.UpdateNotificationPlugin.PluginRelease;
+import com.github.kory33.UpdateNotificationPlugin.dataWrapper.PluginRelease;
 import com.github.kory33.UpdateNotificationPlugin.versioning.PluginVersion;
 import com.github.kory33.UpdateNotificationPlugin.versioning.SemanticPluginVersion;
 

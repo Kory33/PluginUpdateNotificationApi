@@ -1,11 +1,11 @@
-package com.github.kory33.UpdateNotificationPlugin.config;
+package com.github.kory33.UpdateNotificationPlugin.bukkit.config;
 
 import java.io.File;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
-import com.github.kory33.UpdateNotificationPlugin.UpdateNotificationPlugin;
+import com.github.kory33.UpdateNotificationPlugin.bukkit.UpdateNotificationPlugin;
 
 /**
  * Bukkit-configuration handler
