@@ -24,6 +24,11 @@ public class EventListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player joinedPlayer = event.getPlayer();
         
+        // if the updates don't need to be logged
+        if(!this.configHandler.shouldLogToNonOp() && !joinedPlayer.isOp()){
+            return;
+        }
+        
         if(this.configHandler.isUpdateCheckFrequent()){
             BukkitScheduler scheduler = this.plugin.getServer().getScheduler();
             scheduler.runTaskAsynchronously(this.plugin, new Runnable() {

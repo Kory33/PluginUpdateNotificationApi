@@ -16,6 +16,7 @@ public class ConfigHandler {
     private static final String LOG_UP_TO_DATE_PATH = "logUpToDate";
     private static final String LOG_UPDATES_TO_SERVER = "logUpdatesToServer";
     private static final String UPDATE_CHECK_FREQUENT_PATH = "updateCheckFrequent";
+    private static final String LOG_UPDATES_TO_NON_OP = "logUpdatesToNonOp";
     
     /** Path to the configuration file */
     private final FileConfiguration fConfiguration;
@@ -52,5 +53,9 @@ public class ConfigHandler {
      */
     public boolean shouldLogToServer(){
         return this.fConfiguration.getBoolean(LOG_UPDATES_TO_SERVER, true);
+    }
+
+    public boolean shouldLogToNonOp() {
+        return this.fConfiguration.getBoolean(LOG_UPDATES_TO_NON_OP, true);
     }
 }
