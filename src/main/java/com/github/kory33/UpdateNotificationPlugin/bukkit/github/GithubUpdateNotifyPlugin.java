@@ -4,7 +4,7 @@ import com.github.kory33.UpdateNotificationPlugin.bukkit.UpdateNotificationPlugi
 import com.github.kory33.UpdateNotificationPlugin.github.GithubVersionManager;
 
 public abstract class GithubUpdateNotifyPlugin extends UpdateNotificationPlugin {
-    private final GithubVersionManager gVersionManager = new GithubVersionManager(this);
+    private final GithubVersionManager gVersionManager = new GithubVersionManager(this.getGithubRepository(), this.getLogger());
     
     @Override
     public void updateReleaseCache(){

@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -18,7 +19,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.github.kory33.UpdateNotificationPlugin.bukkit.github.GithubUpdateNotifyPlugin;
 import com.github.kory33.UpdateNotificationPlugin.dataWrapper.PluginRelease;
 import com.github.kory33.UpdateNotificationPlugin.versioning.PluginVersion;
 import com.github.kory33.UpdateNotificationPlugin.versioning.SemanticPluginVersion;
@@ -29,9 +29,12 @@ import com.github.kory33.UpdateNotificationPlugin.versioning.SemanticPluginVersi
  *
  */
 public class GithubVersionManager {
-    private final GithubUpdateNotifyPlugin plugin;
-    public GithubVersionManager(GithubUpdateNotifyPlugin plugin){
-        this.plugin = plugin;
+    private final Logger serverLogger;
+    private final String githubRepository;
+    
+    public GithubVersionManager(String githubRepository, Logger serverConsoleLogger){
+        this.githubRepository = githubRepository;
+        this.serverLogger = serverConsoleLogger;
     }
     
     /**
@@ -49,7 +52,7 @@ public class GithubVersionManager {
         try{
             releaseList = this.getReleasesList();
         } catch (Exception e) {
-            this.plugin.getLogger().log(Level.WARNING, "Caught exceptions while fetching and parsing data from Github:", e);
+            this.serverLogger.log(Level.WARNING, "Caught exceptions while fetching and parsing data from Github:", e);
             return null;
         }
         
@@ -65,7 +68,7 @@ public class GithubVersionManager {
      * @return
      */
     private String getGHReleaseAPIUrl() {
-        return "https://api.github.com/repos/" + this.plugin.getGithubRepository() + "/releases";
+        return "https://api.github.com/repos/" + this.githubRepository + "/releases";
     }
     
     /**
@@ -123,7 +126,7 @@ public class GithubVersionManager {
             
             releaseHTMLUrl = releaseJson.getString("html_url");
         }catch(JSONException e){
-            this.plugin.getLogger().log(
+            this.serverLogger.log(
                     Level.WARNING, "Caught exception while parsing JSON. Data might be corrupted while being transmitted.", e
             );
             return null;
@@ -133,7 +136,7 @@ public class GithubVersionManager {
             PluginVersion releaseVersion = new SemanticPluginVersion(versionString);
             return new PluginRelease(releaseVersion, releaseHTMLUrl);
         }catch (IllegalArgumentException e) {
-            this.plugin.getLogger().log(
+            this.serverLogger.log(
                     Level.WARNING, "Version " + versionString + " was found, but was ignored."
             );
             return null;
