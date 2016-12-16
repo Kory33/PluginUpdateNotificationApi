@@ -55,6 +55,10 @@ public class ConfigHandler {
         return this.fConfiguration.getBoolean(LOG_UPDATES_TO_SERVER, true);
     }
 
+    /**
+     * Return true, in reference to the configuration file, if the plugin should log updates to non-op players
+     * @return value of {@value #LOG_UPDATES_TO_NON_OP} in the config file
+     */
     public boolean shouldLogToNonOp() {
         return this.fConfiguration.getBoolean(LOG_UPDATES_TO_NON_OP, true);
     }
