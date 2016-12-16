@@ -1,4 +1,4 @@
-package com.github.kory33.UpdateNotificationPlugin.bukkit.listener;
+package com.github.kory33.updatenotificationplugin.bukkit.listener;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -6,8 +6,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitScheduler;
 
-import com.github.kory33.UpdateNotificationPlugin.bukkit.UpdateNotificationPlugin;
-import com.github.kory33.UpdateNotificationPlugin.bukkit.config.ConfigHandler;
+import com.github.kory33.updatenotificationplugin.bukkit.UpdateNotificationPlugin;
+import com.github.kory33.updatenotificationplugin.bukkit.config.ConfigHandler;
 
 public class EventListener implements Listener {
     private UpdateNotificationPlugin plugin;

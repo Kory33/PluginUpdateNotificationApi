@@ -1,4 +1,4 @@
-package com.github.kory33.UpdateNotificationPlugin.versioning;
+package com.github.kory33.updatenotificationplugin.versioning;
 
 /**
  * Class that represents the semantic versioning of the plugin.

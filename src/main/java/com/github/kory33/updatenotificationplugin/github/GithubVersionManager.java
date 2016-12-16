@@ -1,4 +1,4 @@
-package com.github.kory33.UpdateNotificationPlugin.github;
+package com.github.kory33.updatenotificationplugin.github;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,9 +19,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.github.kory33.UpdateNotificationPlugin.dataWrapper.PluginRelease;
-import com.github.kory33.UpdateNotificationPlugin.versioning.PluginVersion;
-import com.github.kory33.UpdateNotificationPlugin.versioning.SemanticPluginVersion;
+import com.github.kory33.updatenotificationplugin.dataWrapper.PluginRelease;
+import com.github.kory33.updatenotificationplugin.versioning.PluginVersion;
+import com.github.kory33.updatenotificationplugin.versioning.SemanticPluginVersion;
 
 /**
  * 

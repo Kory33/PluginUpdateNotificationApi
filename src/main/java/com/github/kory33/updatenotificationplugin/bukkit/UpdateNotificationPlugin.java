@@ -1,11 +1,11 @@
-package com.github.kory33.UpdateNotificationPlugin.bukkit;
+package com.github.kory33.updatenotificationplugin.bukkit;
 
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import com.github.kory33.UpdateNotificationPlugin.bukkit.config.ConfigHandler;
-import com.github.kory33.UpdateNotificationPlugin.bukkit.listener.EventListener;
-import com.github.kory33.UpdateNotificationPlugin.dataWrapper.PluginRelease;
+import com.github.kory33.updatenotificationplugin.bukkit.config.ConfigHandler;
+import com.github.kory33.updatenotificationplugin.bukkit.listener.EventListener;
+import com.github.kory33.updatenotificationplugin.dataWrapper.PluginRelease;
 
 /**
  * The class that represents a bukkit Java plugin.

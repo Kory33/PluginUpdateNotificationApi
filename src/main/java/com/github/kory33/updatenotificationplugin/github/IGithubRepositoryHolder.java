@@ -1,4 +1,4 @@
-package com.github.kory33.UpdateNotificationPlugin.github;
+package com.github.kory33.updatenotificationplugin.github;
 
 public interface IGithubRepositoryHolder {
     /**

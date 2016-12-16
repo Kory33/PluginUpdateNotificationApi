@@ -1,6 +1,6 @@
-package com.github.kory33.UpdateNotificationPlugin.dataWrapper;
+package com.github.kory33.updatenotificationplugin.dataWrapper;
 
-import com.github.kory33.UpdateNotificationPlugin.versioning.PluginVersion;
+import com.github.kory33.updatenotificationplugin.versioning.PluginVersion;
 
 public class PluginRelease {
     private final PluginVersion version;
