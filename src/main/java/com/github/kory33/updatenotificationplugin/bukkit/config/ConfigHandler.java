@@ -23,7 +23,7 @@ public class ConfigHandler {
     
     
     public ConfigHandler(UpdateNotificationPlugin plugin, String configPath){
-        if(!(new File(configPath)).exists()){
+        if(!(new File(configPath)).exists() && plugin.getResource(configPath) != null){
             plugin.saveResource(configPath, false);
         }
         
