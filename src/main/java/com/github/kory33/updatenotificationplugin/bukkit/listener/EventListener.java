@@ -30,19 +30,7 @@ public class EventListener implements Listener {
         }
         
         if(this.configHandler.isUpdateCheckFrequent()){
-            BukkitScheduler scheduler = this.plugin.getServer().getScheduler();
-            scheduler.runTaskAsynchronously(this.plugin, new Runnable() {
-                @Override
-                public void run() {
-                    plugin.updateReleaseCache();
-                    scheduler.scheduleSyncDelayedTask(plugin, new Runnable() {
-                        @Override
-                        public void run() {
-                            EventListener.this.sendUpdateStatus(joinedPlayer);
-                        }
-                    });
-                }
-            });
+            this.sendAsyncUpdateStatus(joinedPlayer);
         }else{
             this.sendUpdateStatus(joinedPlayer);
         }
@@ -50,6 +38,23 @@ public class EventListener implements Listener {
         return;
     }
     
+    private void sendAsyncUpdateStatus(Player joinedPlayer) {
+        BukkitScheduler scheduler = this.plugin.getServer().getScheduler();
+        
+        scheduler.runTaskAsynchronously(this.plugin, new Runnable() {
+            @Override
+            public void run() {
+                EventListener.this.plugin.updateReleaseCache();
+                scheduler.scheduleSyncDelayedTask(EventListener.this.plugin, new Runnable() {
+                    @Override
+                    public void run() {
+                        EventListener.this.sendUpdateStatus(joinedPlayer);
+                    }
+                });
+            }
+        });
+    }
+
     /**
      * Send the update status to the player who has joined the server
      * @param joinedPlayer
