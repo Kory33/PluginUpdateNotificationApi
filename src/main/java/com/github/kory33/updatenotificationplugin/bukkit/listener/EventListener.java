@@ -38,6 +38,10 @@ public class EventListener implements Listener {
         return;
     }
     
+    /**
+     * Update the release cache of the plugin asynchronously, and then send the update status to the player.
+     * @param joinedPlayer to whom the notification would be sent, if needed
+     */
     private void sendAsyncUpdateStatus(Player joinedPlayer) {
         BukkitScheduler scheduler = this.plugin.getServer().getScheduler();
         
