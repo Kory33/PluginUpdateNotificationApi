@@ -18,12 +18,19 @@ public class ConfigHandler {
     private static final String UPDATE_CHECK_FREQUENT_PATH = "updateCheckFrequent";
     private static final String LOG_UPDATES_TO_NON_OP = "logUpdatesToNonOp";
     
+    private boolean shouldUseDefaultValue = false;
+    
     /** Path to the configuration file */
-    private final FileConfiguration fConfiguration;
+    private FileConfiguration fConfiguration = null;
     
     
     public ConfigHandler(UpdateNotificationPlugin plugin, String configPath){
-        if(!(new File(configPath)).exists() && plugin.getResource(configPath) != null){
+        if(!(new File(configPath)).exists()){
+            if(plugin.getResource(configPath) == null) {
+                this.shouldUseDefaultValue = true;
+                return;
+            }
+            
             plugin.saveResource(configPath, false);
         }
         
