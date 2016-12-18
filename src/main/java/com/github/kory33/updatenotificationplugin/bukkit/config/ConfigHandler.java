@@ -54,7 +54,7 @@ public class ConfigHandler {
      * @return value of {@value #LOG_UP_TO_DATE_PATH} in the config file
      */
     public boolean shouldLogUpToDate(){
-        if(this.fConfiguration == null || this.fConfiguration.contains(LOG_UP_TO_DATE_PATH)) {
+        if(this.shouldUseDefaultValue(LOG_UP_TO_DATE_PATH)) {
             return DEFAULT_CONFIG_BOOL_VALUES.get(LOG_UP_TO_DATE_PATH);
         }
         
@@ -66,7 +66,7 @@ public class ConfigHandler {
      * @return value of {@value #UPDATE_CHECK_FREQUENT_PATH} in the config file
      */
     public boolean isUpdateCheckFrequent(){
-        if(this.fConfiguration == null || this.fConfiguration.contains(UPDATE_CHECK_FREQUENT_PATH)) {
+        if(this.shouldUseDefaultValue(UPDATE_CHECK_FREQUENT_PATH)) {
             return DEFAULT_CONFIG_BOOL_VALUES.get(UPDATE_CHECK_FREQUENT_PATH);
         }
         
@@ -78,7 +78,7 @@ public class ConfigHandler {
      * @return value of {@value #UPDATE_CHECK_FREQUENT_PATH} in the config file
      */
     public boolean shouldLogToServer(){
-        if(this.fConfiguration == null || this.fConfiguration.contains(LOG_UPDATES_TO_SERVER)) {
+        if(this.shouldUseDefaultValue(LOG_UPDATES_TO_SERVER)) {
             return DEFAULT_CONFIG_BOOL_VALUES.get(LOG_UPDATES_TO_SERVER);
         }
         
@@ -90,10 +90,14 @@ public class ConfigHandler {
      * @return value of {@value #LOG_UPDATES_TO_NON_OP} in the config file
      */
     public boolean shouldLogToNonOp() {
-        if(this.fConfiguration == null || this.fConfiguration.contains(LOG_UPDATES_TO_NON_OP)) {
+        if(this.shouldUseDefaultValue(LOG_UPDATES_TO_NON_OP)) {
             return DEFAULT_CONFIG_BOOL_VALUES.get(LOG_UPDATES_TO_NON_OP);
         }
         
         return this.fConfiguration.getBoolean(LOG_UPDATES_TO_NON_OP);
+    }
+    
+    private boolean shouldUseDefaultValue(String path) {
+        return this.fConfiguration == null || this.fConfiguration.contains(path);
     }
 }
