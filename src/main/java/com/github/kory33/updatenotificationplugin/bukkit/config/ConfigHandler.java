@@ -1,6 +1,9 @@
 package com.github.kory33.updatenotificationplugin.bukkit.config;
 
 import java.io.File;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -18,7 +21,16 @@ public class ConfigHandler {
     private static final String UPDATE_CHECK_FREQUENT_PATH = "updateCheckFrequent";
     private static final String LOG_UPDATES_TO_NON_OP = "logUpdatesToNonOp";
     
-    private boolean shouldUseDefaultValue = false;
+    private static final Map<String, Boolean> DEFAULT_CONFIG_BOOL_VALUES;
+    static{
+        Map<String, Boolean> map = new HashMap<>();
+        map.put(LOG_UP_TO_DATE_PATH, false);
+        map.put(LOG_UPDATES_TO_SERVER, true);
+        map.put(UPDATE_CHECK_FREQUENT_PATH, false);
+        map.put(LOG_UPDATES_TO_NON_OP, false);
+        
+        DEFAULT_CONFIG_BOOL_VALUES = Collections.unmodifiableMap(map);
+    }
     
     /** Path to the configuration file */
     private FileConfiguration fConfiguration = null;
@@ -27,7 +39,6 @@ public class ConfigHandler {
     public ConfigHandler(UpdateNotificationPlugin plugin, String configPath){
         if(!(new File(configPath)).exists()){
             if(plugin.getResource(configPath) == null) {
-                this.shouldUseDefaultValue = true;
                 return;
             }
             
@@ -43,7 +54,11 @@ public class ConfigHandler {
      * @return value of {@value #LOG_UP_TO_DATE_PATH} in the config file
      */
     public boolean shouldLogUpToDate(){
-        return this.fConfiguration.getBoolean(LOG_UP_TO_DATE_PATH, false);
+        if(this.fConfiguration == null || this.fConfiguration.contains(LOG_UP_TO_DATE_PATH)) {
+            return DEFAULT_CONFIG_BOOL_VALUES.get(LOG_UP_TO_DATE_PATH);
+        }
+        
+        return this.fConfiguration.getBoolean(LOG_UP_TO_DATE_PATH);
     }
     
     /**
@@ -51,7 +66,11 @@ public class ConfigHandler {
      * @return value of {@value #UPDATE_CHECK_FREQUENT_PATH} in the config file
      */
     public boolean isUpdateCheckFrequent(){
-        return this.fConfiguration.getBoolean(UPDATE_CHECK_FREQUENT_PATH, false);
+        if(this.fConfiguration == null || this.fConfiguration.contains(UPDATE_CHECK_FREQUENT_PATH)) {
+            return DEFAULT_CONFIG_BOOL_VALUES.get(UPDATE_CHECK_FREQUENT_PATH);
+        }
+        
+        return this.fConfiguration.getBoolean(UPDATE_CHECK_FREQUENT_PATH);
     }
     
     /**
@@ -59,7 +78,11 @@ public class ConfigHandler {
      * @return value of {@value #UPDATE_CHECK_FREQUENT_PATH} in the config file
      */
     public boolean shouldLogToServer(){
-        return this.fConfiguration.getBoolean(LOG_UPDATES_TO_SERVER, true);
+        if(this.fConfiguration == null || this.fConfiguration.contains(LOG_UPDATES_TO_SERVER)) {
+            return DEFAULT_CONFIG_BOOL_VALUES.get(LOG_UPDATES_TO_SERVER);
+        }
+        
+        return this.fConfiguration.getBoolean(LOG_UPDATES_TO_SERVER);
     }
 
     /**
@@ -67,6 +90,10 @@ public class ConfigHandler {
      * @return value of {@value #LOG_UPDATES_TO_NON_OP} in the config file
      */
     public boolean shouldLogToNonOp() {
-        return this.fConfiguration.getBoolean(LOG_UPDATES_TO_NON_OP, true);
+        if(this.fConfiguration == null || this.fConfiguration.contains(LOG_UPDATES_TO_NON_OP)) {
+            return DEFAULT_CONFIG_BOOL_VALUES.get(LOG_UPDATES_TO_NON_OP);
+        }
+        
+        return this.fConfiguration.getBoolean(LOG_UPDATES_TO_NON_OP);
     }
 }
