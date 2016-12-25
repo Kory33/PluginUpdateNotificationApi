@@ -16,18 +16,20 @@ import com.github.kory33.updatenotificationplugin.bukkit.UpdateNotificationPlugi
  *
  */
 public class ConfigHandler {
-    private static final String LOG_UP_TO_DATE_PATH = "logUpToDate";
-    private static final String LOG_UPDATES_TO_SERVER = "logUpdatesToServer";
-    private static final String UPDATE_CHECK_FREQUENT_PATH = "updateCheckFrequent";
-    private static final String LOG_UPDATES_TO_NON_OP = "logUpdatesToNonOp";
+    /** Paths to the configuration field */
+    private static final String PATH_LOG_UP_TO_DATE = "logUpToDate";
+    private static final String PATH_LOG_UPDATES_TO_SERVER = "logUpdatesToServer";
+    private static final String PATH_UPDATE_CHECK_FREQUENT = "updateCheckFrequent";
+    private static final String PATH_LOG_UPDATES_TO_NON_OP = "logUpdatesToNonOp";
     
+    /** Map that stores default values for each configuration field */
     private static final Map<String, Boolean> DEFAULT_CONFIG_BOOL_VALUES;
     static{
         Map<String, Boolean> map = new HashMap<>();
-        map.put(LOG_UP_TO_DATE_PATH, false);
-        map.put(LOG_UPDATES_TO_SERVER, true);
-        map.put(UPDATE_CHECK_FREQUENT_PATH, false);
-        map.put(LOG_UPDATES_TO_NON_OP, false);
+        map.put(PATH_LOG_UP_TO_DATE, false);
+        map.put(PATH_LOG_UPDATES_TO_SERVER, true);
+        map.put(PATH_UPDATE_CHECK_FREQUENT, false);
+        map.put(PATH_LOG_UPDATES_TO_NON_OP, false);
         
         DEFAULT_CONFIG_BOOL_VALUES = Collections.unmodifiableMap(map);
     }
@@ -51,50 +53,50 @@ public class ConfigHandler {
     
     /**
      * Return true, in reference to the configuration file, if the plugin should log up-to-date status
-     * @return value of {@value #LOG_UP_TO_DATE_PATH} in the config file
+     * @return value of {@value #PATH_LOG_UP_TO_DATE} in the config file
      */
     public boolean shouldLogUpToDate(){
-        if(this.shouldUseDefaultValue(LOG_UP_TO_DATE_PATH)) {
-            return DEFAULT_CONFIG_BOOL_VALUES.get(LOG_UP_TO_DATE_PATH);
+        if(this.shouldUseDefaultValue(PATH_LOG_UP_TO_DATE)) {
+            return DEFAULT_CONFIG_BOOL_VALUES.get(PATH_LOG_UP_TO_DATE);
         }
         
-        return this.fConfiguration.getBoolean(LOG_UP_TO_DATE_PATH);
+        return this.fConfiguration.getBoolean(PATH_LOG_UP_TO_DATE);
     }
     
     /**
      * Return true, in reference to the configuration file, if the plugin should check for update frequently.
-     * @return value of {@value #UPDATE_CHECK_FREQUENT_PATH} in the config file
+     * @return value of {@value #PATH_UPDATE_CHECK_FREQUENT} in the config file
      */
     public boolean isUpdateCheckFrequent(){
-        if(this.shouldUseDefaultValue(UPDATE_CHECK_FREQUENT_PATH)) {
-            return DEFAULT_CONFIG_BOOL_VALUES.get(UPDATE_CHECK_FREQUENT_PATH);
+        if(this.shouldUseDefaultValue(PATH_UPDATE_CHECK_FREQUENT)) {
+            return DEFAULT_CONFIG_BOOL_VALUES.get(PATH_UPDATE_CHECK_FREQUENT);
         }
         
-        return this.fConfiguration.getBoolean(UPDATE_CHECK_FREQUENT_PATH);
+        return this.fConfiguration.getBoolean(PATH_UPDATE_CHECK_FREQUENT);
     }
     
     /**
      * Return true, in reference to the configuration file, if the plugin should log updates to the server console
-     * @return value of {@value #UPDATE_CHECK_FREQUENT_PATH} in the config file
+     * @return value of {@value #PATH_UPDATE_CHECK_FREQUENT} in the config file
      */
     public boolean shouldLogToServer(){
-        if(this.shouldUseDefaultValue(LOG_UPDATES_TO_SERVER)) {
-            return DEFAULT_CONFIG_BOOL_VALUES.get(LOG_UPDATES_TO_SERVER);
+        if(this.shouldUseDefaultValue(PATH_LOG_UPDATES_TO_SERVER)) {
+            return DEFAULT_CONFIG_BOOL_VALUES.get(PATH_LOG_UPDATES_TO_SERVER);
         }
         
-        return this.fConfiguration.getBoolean(LOG_UPDATES_TO_SERVER);
+        return this.fConfiguration.getBoolean(PATH_LOG_UPDATES_TO_SERVER);
     }
 
     /**
      * Return true, in reference to the configuration file, if the plugin should log updates to non-op players
-     * @return value of {@value #LOG_UPDATES_TO_NON_OP} in the config file
+     * @return value of {@value #PATH_LOG_UPDATES_TO_NON_OP} in the config file
      */
     public boolean shouldLogToNonOp() {
-        if(this.shouldUseDefaultValue(LOG_UPDATES_TO_NON_OP)) {
-            return DEFAULT_CONFIG_BOOL_VALUES.get(LOG_UPDATES_TO_NON_OP);
+        if(this.shouldUseDefaultValue(PATH_LOG_UPDATES_TO_NON_OP)) {
+            return DEFAULT_CONFIG_BOOL_VALUES.get(PATH_LOG_UPDATES_TO_NON_OP);
         }
         
-        return this.fConfiguration.getBoolean(LOG_UPDATES_TO_NON_OP);
+        return this.fConfiguration.getBoolean(PATH_LOG_UPDATES_TO_NON_OP);
     }
     
     private boolean shouldUseDefaultValue(String path) {
