@@ -1,7 +1,5 @@
 # UpdatePluginNotification
-<p style="text-align: center;">
-[![](https://jitpack.io/v/Kory33/UpdateNotificationPlugin.svg)](https://jitpack.io/#Kory33/UpdateNotificationPlugin)
-</p>
+[![](https://jitpack.io/v/Kory33/UpdateNotificationPlugin.svg)](https://jitpack.io/#Kory33/UpdateNotificationPlugin)  
 This repository is a library that wraps Bukkit API along with automatic update notification.
 ## How To Use It?
 ### Bukkit plugins
