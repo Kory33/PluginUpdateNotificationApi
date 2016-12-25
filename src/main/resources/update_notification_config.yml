@@ -1,0 +1,4 @@
+logUpToDate: false;
+logUpdatesToServer: true;
+updateCheckFrequent: false;
+logUpdatesToNonOp: true;
