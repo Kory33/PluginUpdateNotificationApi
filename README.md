@@ -1,0 +1,56 @@
+# UpdatePluginNotification
+## What's this?
+This repository is a library that wraps Bukkit API along with automatic update notification.
+## How To Use It?
+For Bukkit plugins using Github for version management, simply extend ``com.github.kory33.updatenotificationplugin.bukkit.github:GithubUpdateNotifyPlugin``  
+class.
+
+Bungeecord plugins can utilize the class that is present under ``jp.llv.updatenotificationplugin.bungeecord``
+## Dependencies
+You can add dependency to this library into your project with the following settings:
+### Maven
+(Replace `Other ...` comments with set of elements appropriate for your project)
+```XML
+<project>
+    <repositories>
+        <!-- Other repositories -->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+    <dependencies>
+        <!-- Other dependencies -->
+        <dependency>
+            <groupId>com.github.Kory33</groupId>
+            <artifactId>UpdateNotificationPlugin</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <!-- Other plugins -->
+            <!-- To include this library's classes -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <artifactSet>
+                                <includes>
+                                    <include>com.github.Kory33:UpdateNotificationPlugin</include>
+                                </includes>
+                            </artifactSet>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+```
