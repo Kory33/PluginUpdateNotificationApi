@@ -54,11 +54,6 @@ public class EventListener implements Listener {
     public void onPlayerJoin(PostLoginEvent event) {
         ProxiedPlayer joinedPlayer = event.getPlayer();
 
-        // if the updates don't need to be logged
-        if (!this.configHandler.shouldLogToNonOp() /*&& !joinedPlayer.isOp()*/) {
-            return;
-        }
-
         if (this.configHandler.isUpdateCheckFrequent()) {
             this.sendAsyncUpdateStatus(joinedPlayer);
         } else {
