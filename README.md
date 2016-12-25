@@ -1,5 +1,4 @@
 # UpdatePluginNotification
-## What's this?
 This repository is a library that wraps Bukkit API along with automatic update notification.
 ## How To Use It?
 ### Bukkit plugins
