@@ -159,7 +159,7 @@ public abstract class UpdateNotificationPlugin extends Plugin {
     
     @Override
     public void onDisable() {
-        super.getProxy().getPluginManager().unregisterListeners(this);
+        super.getProxy().getPluginManager().unregisterListener(listener);
         
         super.getLogger().log(Level.INFO, "Disabled UpdateNotifyPlugin is disabled for {0}", getPluginName());
         super.onDisable();
