@@ -1,5 +1,6 @@
 package com.github.kory33.updatenotificationplugin.bukkit;
 
+import org.bukkit.ChatColor;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -42,8 +43,8 @@ public abstract class UpdateNotificationPlugin extends JavaPlugin {
      * @return string that will be logged to the server console when an update is available.
      */
     public String getUpdateLogString() {
-        return "New version available! " + this.getPluginName() + this.latestRelease.getVersionString()
-             + "[" + this.latestRelease.getLink() + "]";
+        return "New version available! " + this.getPluginName() + "-" + this.latestRelease.getVersionString()
+             + " [ " + this.latestRelease.getLink() + " ]";
     }
     
     
@@ -52,8 +53,9 @@ public abstract class UpdateNotificationPlugin extends JavaPlugin {
      * @return string that will be displayed to the players who logged in when an update is available.
      */
     public String getUpdatePlayerLogString() {
-        return "New version available! " + this.getPluginName() + this.latestRelease.getVersionString()
-             + "[" + this.latestRelease.getLink() + "]";
+        return ChatColor.YELLOW + "New version available! "
+        	 + ChatColor.GREEN + this.getPluginName() + "-" + this.latestRelease.getVersionString()
+             + ChatColor.GRAY + " [ " + this.latestRelease.getLink() + " ]";
     }
     
     
@@ -124,7 +126,7 @@ public abstract class UpdateNotificationPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         this.listener = new EventListener(this, this.configHandler);
-        super.getServer().getLogger().info("Embedded UpdateNotifyPlugin is enabled for " + getPluginName());
+        super.getServer().getLogger().info("Embedded UpdateNotifyPlugin is enabled for " + this.getPluginName());
         
         updateReleaseCache();
         
@@ -139,7 +141,7 @@ public abstract class UpdateNotificationPlugin extends JavaPlugin {
     public void onDisable() {
         HandlerList.unregisterAll(listener);
         
-        super.getServer().getLogger().info("Disabled UpdateNotifyPlugin is disabled for " + getPluginName());
+        super.getServer().getLogger().info("Disabled UpdateNotifyPlugin is disabled for " + this.getPluginName());
         super.onDisable();
     }
 }
