@@ -126,7 +126,7 @@ public abstract class UpdateNotificationPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         this.listener = new EventListener(this, this.configHandler);
-        super.getServer().getLogger().info("Embedded UpdateNotifyPlugin is enabled for " + this.getPluginName());
+        super.getLogger().info("Embedded UpdateNotifyPlugin is enabled for " + this.getPluginName());
         
         updateReleaseCache();
         
@@ -141,7 +141,7 @@ public abstract class UpdateNotificationPlugin extends JavaPlugin {
     public void onDisable() {
         HandlerList.unregisterAll(listener);
         
-        super.getServer().getLogger().info("Disabled UpdateNotifyPlugin is disabled for " + this.getPluginName());
+        super.getLogger().info("Disabled UpdateNotifyPlugin is disabled for " + this.getPluginName());
         super.onDisable();
     }
 }
