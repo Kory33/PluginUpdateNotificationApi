@@ -39,7 +39,7 @@ public class ConfigHandler {
     
     
     public ConfigHandler(UpdateNotificationPlugin plugin, String configPath){
-        if(!(new File(configPath)).exists()){
+        if(!(new File(plugin.getDataFolder(), configPath)).exists()){
             if(plugin.getResource(configPath) == null) {
                 return;
             }
