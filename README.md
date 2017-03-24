@@ -3,10 +3,15 @@
 This repository is a library that wraps Bukkit API along with automatic update notification.
 ## How To Use It?
 ### Bukkit plugins
-If you are using Github for version management, simply extend ``com.github.kory33.updatenotificationplugin.bukkit.github:GithubUpdateNotifyPlugin``  class.
-<p>
-Bungeecord plugins can utilize the class that is present under ``jp.llv.updatenotificationplugin.bungeecord``  
-which should replace ``com.github.kory33.updatenotificationplugin.bukkit`` part of above-stated classes.
+If you are using Github for version management, simply extend  ``com.github.kory33.updatenotificationplugin.bukkit.github:GithubUpdateNotifyPlugin``  class.
+
+
+### BungeeCord plugins
+BungeeCord plugins can utilize the class that is present under
+``jp.llv.updatenotificationplugin.bungeecord``
+which should replace ``com.github.kory33.updatenotificationplugin.bukkit`` part of above-stated classes.  
+
+
 ## Dependencies
 You can add dependency to this library into your project with the following settings:
 ### Maven
