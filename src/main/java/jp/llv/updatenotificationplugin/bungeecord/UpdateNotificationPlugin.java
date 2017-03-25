@@ -4,7 +4,7 @@
  * Copyright 2016 toyblocks.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
+re and associated documentation files (the "Software"), to deal
  * in the Software without restriction, including without limitation the rights
  * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
  * copies of the Software, and to permit persons to whom the Software is
@@ -25,8 +25,10 @@ package jp.llv.updatenotificationplugin.bungeecord;
 
 import com.github.kory33.updatenotificationplugin.dataWrapper.PluginRelease;
 import java.util.logging.Level;
+
 import jp.llv.updatenotificationplugin.bungeecord.config.ConfigHandler;
 import jp.llv.updatenotificationplugin.bungeecord.listener.EventListener;
+import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.plugin.Plugin;
 
 /**
@@ -64,8 +66,8 @@ public abstract class UpdateNotificationPlugin extends Plugin {
      * @return string that will be logged to the server console when an update is available.
      */
     public String getUpdateLogString() {
-        return "New version available! " + this.getPluginName() + this.latestRelease.getVersionString()
-             + "[" + this.latestRelease.getLink() + "]";
+        return "New version available! " + this.getPluginName() + "-" + this.latestRelease.getVersionString()
+        + " [ " + this.latestRelease.getLink() + " ]";
     }
     
     
@@ -74,8 +76,9 @@ public abstract class UpdateNotificationPlugin extends Plugin {
      * @return string that will be displayed to the players who logged in when an update is available.
      */
     public String getUpdatePlayerLogString() {
-        return "New version available! " + this.getPluginName() + this.latestRelease.getVersionString()
-             + "[" + this.latestRelease.getLink() + "]";
+        return ChatColor.YELLOW + "New version available! "
+                + ChatColor.GREEN + this.getPluginName() + "-" + this.latestRelease.getVersionString()
+                + ChatColor.GRAY + " [ " + this.latestRelease.getLink() + " ]";
     }
     
     
@@ -161,7 +164,7 @@ public abstract class UpdateNotificationPlugin extends Plugin {
     public void onDisable() {
         super.getProxy().getPluginManager().unregisterListener(listener);
         
-        super.getLogger().log(Level.INFO, "Disabled UpdateNotifyPlugin is disabled for {0}", getPluginName());
+        super.getLogger().log(Level.INFO, "Disabled UpdateNotifyPlugin for {0}", getPluginName());
         super.onDisable();
     }
 }
