@@ -30,7 +30,7 @@ You can add dependency to this library into your project with the following sett
         <dependency>
             <groupId>com.github.Kory33</groupId>
             <artifactId>UpdateNotificationPlugin</artifactId>
-            <version>0.1.3</version>
+            <version>0.1.5-beta</version>
         </dependency>
     </dependencies>
     <build>
