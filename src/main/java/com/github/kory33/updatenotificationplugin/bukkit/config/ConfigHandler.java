@@ -52,17 +52,21 @@ public class ConfigHandler {
         File file = new File(plugin.getDataFolder(), configPath);
         this.fConfiguration = YamlConfiguration.loadConfiguration(file);
     }
+    
+    private boolean getBooleanFromPath(String PATH) {
+        if(this.shouldUseDefaultValue(PATH)) {
+            return DEFAULT_CONFIG_BOOL_VALUES.get(PATH);
+        }
+        
+        return this.fConfiguration.getBoolean(PATH);
+    }
 
     /**
      * Return true, in reference to the configuration file, if the plugin should check the update status.
      * @return value of {@value #PATH_UPDATE_CHECK_ENABLED} in the config file
      */
     public boolean isUpdateCheckEnabled(){
-        if(this.shouldUseDefaultValue(PATH_UPDATE_CHECK_ENABLED)){
-            return DEFAULT_CONFIG_BOOL_VALUES.get(PATH_UPDATE_CHECK_ENABLED);
-        }
-        
-        return this.fConfiguration.getBoolean(PATH_UPDATE_CHECK_ENABLED);
+        return this.getBooleanFromPath(PATH_UPDATE_CHECK_ENABLED);
     }
     
     /**
@@ -70,11 +74,7 @@ public class ConfigHandler {
      * @return value of {@value #PATH_LOG_UP_TO_DATE} in the config file
      */
     public boolean shouldLogUpToDate(){
-        if(this.shouldUseDefaultValue(PATH_LOG_UP_TO_DATE)) {
-            return DEFAULT_CONFIG_BOOL_VALUES.get(PATH_LOG_UP_TO_DATE);
-        }
-        
-        return this.fConfiguration.getBoolean(PATH_LOG_UP_TO_DATE);
+        return this.getBooleanFromPath(PATH_LOG_UP_TO_DATE);
     }
     
     /**
@@ -82,11 +82,7 @@ public class ConfigHandler {
      * @return value of {@value #PATH_UPDATE_CHECK_FREQUENT} in the config file
      */
     public boolean isUpdateCheckFrequent(){
-        if(this.shouldUseDefaultValue(PATH_UPDATE_CHECK_FREQUENT)) {
-            return DEFAULT_CONFIG_BOOL_VALUES.get(PATH_UPDATE_CHECK_FREQUENT);
-        }
-        
-        return this.fConfiguration.getBoolean(PATH_UPDATE_CHECK_FREQUENT);
+        return this.getBooleanFromPath(PATH_UPDATE_CHECK_FREQUENT);
     }
     
     /**
@@ -94,11 +90,7 @@ public class ConfigHandler {
      * @return value of {@value #PATH_UPDATE_CHECK_FREQUENT} in the config file
      */
     public boolean shouldLogToServer(){
-        if(this.shouldUseDefaultValue(PATH_LOG_UPDATES_TO_SERVER)) {
-            return DEFAULT_CONFIG_BOOL_VALUES.get(PATH_LOG_UPDATES_TO_SERVER);
-        }
-        
-        return this.fConfiguration.getBoolean(PATH_LOG_UPDATES_TO_SERVER);
+        return this.getBooleanFromPath(PATH_LOG_UPDATES_TO_SERVER);
     }
 
     /**
@@ -106,11 +98,7 @@ public class ConfigHandler {
      * @return value of {@value #PATH_LOG_UPDATES_TO_NON_OP} in the config file
      */
     public boolean shouldLogToNonOp() {
-        if(this.shouldUseDefaultValue(PATH_LOG_UPDATES_TO_NON_OP)) {
-            return DEFAULT_CONFIG_BOOL_VALUES.get(PATH_LOG_UPDATES_TO_NON_OP);
-        }
-        
-        return this.fConfiguration.getBoolean(PATH_LOG_UPDATES_TO_NON_OP);
+        return this.getBooleanFromPath(PATH_LOG_UPDATES_TO_NON_OP);
     }
     
     private boolean shouldUseDefaultValue(String path) {
