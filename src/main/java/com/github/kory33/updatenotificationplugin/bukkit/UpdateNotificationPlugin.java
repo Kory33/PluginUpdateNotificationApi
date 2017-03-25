@@ -1,5 +1,7 @@
 package com.github.kory33.updatenotificationplugin.bukkit;
 
+import java.util.logging.Level;
+
 import org.bukkit.ChatColor;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -126,8 +128,8 @@ public abstract class UpdateNotificationPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         this.listener = new EventListener(this, this.configHandler);
-        super.getLogger().info("Embedded UpdateNotifyPlugin is enabled for " + this.getPluginName());
-        
+        super.getLogger().log(Level.INFO, "Embedded UpdateNotifyPlugin is enabled for {0}", this.getPluginName());
+       
         updateReleaseCache();
         
         if(this.configHandler.shouldLogToServer()){
@@ -141,7 +143,7 @@ public abstract class UpdateNotificationPlugin extends JavaPlugin {
     public void onDisable() {
         HandlerList.unregisterAll(listener);
         
-        super.getLogger().info("Disabled UpdateNotifyPlugin is disabled for " + this.getPluginName());
+        super.getLogger().log(Level.INFO, "Disabled UpdateNotifyPlugin for {0}", getPluginName());
         super.onDisable();
     }
 }
