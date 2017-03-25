@@ -1,4 +1,6 @@
-logUpToDate: false;
-logUpdatesToServer: true;
-updateCheckFrequent: true;
-logUpdatesToNonOp: true;
+enableUpdateCheck: true
+
+logUpToDate: false
+logUpdatesToServer: true
+updateCheckFrequent: true
+logUpdatesToNonOp: true

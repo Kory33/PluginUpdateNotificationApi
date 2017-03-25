@@ -17,6 +17,7 @@ import com.github.kory33.updatenotificationplugin.bukkit.UpdateNotificationPlugi
  */
 public class ConfigHandler {
     /** Paths to the configuration field */
+    private static final String PATH_UPDATE_CHECK_ENABLED = "enableUpdateCheck";
     private static final String PATH_LOG_UP_TO_DATE = "logUpToDate";
     private static final String PATH_LOG_UPDATES_TO_SERVER = "logUpdatesToServer";
     private static final String PATH_UPDATE_CHECK_FREQUENT = "updateCheckFrequent";
@@ -30,6 +31,7 @@ public class ConfigHandler {
         map.put(PATH_LOG_UPDATES_TO_SERVER, true);
         map.put(PATH_UPDATE_CHECK_FREQUENT, false);
         map.put(PATH_LOG_UPDATES_TO_NON_OP, false);
+        map.put(PATH_UPDATE_CHECK_ENABLED, true);
         
         DEFAULT_CONFIG_BOOL_VALUES = Collections.unmodifiableMap(map);
     }
@@ -49,6 +51,18 @@ public class ConfigHandler {
         
         File file = new File(plugin.getDataFolder(), configPath);
         this.fConfiguration = YamlConfiguration.loadConfiguration(file);
+    }
+
+    /**
+     * Return true, in reference to the configuration file, if the plugin should check the update status.
+     * @return value of {@value #PATH_UPDATE_CHECK_ENABLED} in the config file
+     */
+    public boolean isUpdateCheckEnabled(){
+        if(this.shouldUseDefaultValue(PATH_UPDATE_CHECK_ENABLED)){
+            return DEFAULT_CONFIG_BOOL_VALUES.get(PATH_UPDATE_CHECK_ENABLED);
+        }
+        
+        return this.fConfiguration.getBoolean(PATH_UPDATE_CHECK_ENABLED);
     }
     
     /**
