@@ -127,6 +127,12 @@ public abstract class UpdateNotificationPlugin extends JavaPlugin {
     
     @Override
     public void onEnable() {
+        super.onEnable();
+        
+        if(!this.configHandler.isUpdateCheckEnabled()) {
+            return;
+        }
+        
         this.listener = new EventListener(this, this.configHandler);
         super.getLogger().log(Level.INFO, "Embedded UpdateNotifyPlugin is enabled for {0}", this.getPluginName());
        
@@ -135,15 +141,18 @@ public abstract class UpdateNotificationPlugin extends JavaPlugin {
         if(this.configHandler.shouldLogToServer()){
             this.logUpdateStatus();
         }
-        
-        super.onEnable();
     }
     
     @Override
     public void onDisable() {
+        super.onDisable();
+        
+        if(!this.configHandler.isUpdateCheckEnabled()) {
+            return;
+        }
+        
         HandlerList.unregisterAll(listener);
         
         super.getLogger().log(Level.INFO, "Disabled UpdateNotifyPlugin for {0}", getPluginName());
-        super.onDisable();
     }
 }

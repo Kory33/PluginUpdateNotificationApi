@@ -42,7 +42,7 @@ import net.md_5.bungee.config.YamlConfiguration;
  *
  */
 public class ConfigHandler {
-
+    private static final String UPDATE_CHECK_ENABLED_PATH = "enableUpdateCheck";
     private static final String LOG_UP_TO_DATE_PATH = "logUpToDate";
     private static final String LOG_UPDATES_TO_SERVER = "logUpdatesToServer";
     private static final String UPDATE_CHECK_FREQUENT_PATH = "updateCheckFrequent";
@@ -66,6 +66,10 @@ public class ConfigHandler {
         }
     }
 
+    public boolean isUpdateCheckEnabled() {
+        return this.fConfiguration.getBoolean(UPDATE_CHECK_ENABLED_PATH, false);
+    }
+    
     /**
      * Return true, in reference to the configuration file, if the plugin should
      * log up-to-date status
