@@ -1,6 +1,6 @@
-# UpdatePluginNotification
+# UpdateNotificationPlugin
 [![](https://jitpack.io/v/Kory33/UpdateNotificationPlugin.svg)](https://jitpack.io/#Kory33/UpdateNotificationPlugin)  
-This repository is a library that wraps Bukkit API along with automatic update notification.
+This repository is a library that wraps Bukkit API along with automatic update notification system.
 ## How To Use It?
 ### Bukkit plugins
 If you are using Github for version management, simply extend  ``com.github.kory33.updatenotificationplugin.bukkit.github:GithubUpdateNotifyPlugin``  class.
