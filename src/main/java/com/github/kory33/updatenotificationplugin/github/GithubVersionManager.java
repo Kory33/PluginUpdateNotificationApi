@@ -1,27 +1,21 @@
 package com.github.kory33.updatenotificationplugin.github;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpResponseException;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import com.github.kory33.updatenotificationplugin.dataWrapper.PluginRelease;
 import com.github.kory33.updatenotificationplugin.versioning.PluginVersion;
 import com.github.kory33.updatenotificationplugin.versioning.SemanticPluginVersion;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 /**
  * 
@@ -67,8 +61,12 @@ public class GithubVersionManager {
      * get the Github release api's url from the plugin
      * @return
      */
-    private String getGHReleaseAPIUrl() {
-        return "https://api.github.com/repos/" + this.githubRepository + "/releases";
+    private URL getGHReleaseAPIUrl() {
+        try {
+            return new URL("https://api.github.com/repos/" + this.githubRepository + "/releases");
+        } catch (MalformedURLException e) {
+            return null;
+        }
     }
     
     /**
@@ -77,36 +75,19 @@ public class GithubVersionManager {
      * @throws ClientProtocolException
      * @throws IOException
      */
-    private String getReleaseJSONString() throws ClientProtocolException, IOException {
-        CloseableHttpClient httpClient = HttpClients.createDefault();
-        HttpGet httpGetMethod = new HttpGet(this.getGHReleaseAPIUrl());
-        
-        // add user agent header
-        httpGetMethod.setHeader("User-Agent", "Update-Notification-Plugin--Github-Version-Manager");
-        
-        // Execute the http get method and gain the response from the server
-        HttpResponse response = httpClient.execute(httpGetMethod);
-        
-        int responseStatusCode = response.getStatusLine().getStatusCode();
-        
-        if (responseStatusCode != 200) {
-            throw new HttpResponseException(
-                    responseStatusCode, "Got unexpected status response. Is the url " + this.getGHReleaseAPIUrl() + " proper?"
-                    );
+    private JsonArray getReleaseJSONArray() throws IOException {
+        URL url = this.getGHReleaseAPIUrl();
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+        connection.setRequestProperty("User-Agent", "Update-Notification-Plugin--Github-Version-Manager");
+
+        int responseStatusCode = connection.getResponseCode();
+        if (responseStatusCode != HttpURLConnection.HTTP_OK) {
+            throw new IOException("Got unexpected status response(" + responseStatusCode + "). Is the url "
+                    + this.getGHReleaseAPIUrl() + " proper?");
         }
         
-        // get and return the response body
-        HttpEntity responseEntity = response.getEntity();
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(responseEntity.getContent()));
-        
-        StringBuilder stringBuilder = new StringBuilder();
-        String line;
-        
-        while((line = bufferedReader.readLine()) != null){
-            stringBuilder.append(line);
-        }
-        
-        return stringBuilder.toString();
+        return (new JsonParser()).parse(new InputStreamReader(connection.getInputStream())).getAsJsonArray();
     }
     
     /**
@@ -117,28 +98,18 @@ public class GithubVersionManager {
      * @param releaseJson
      * @return instance of PluginRelease
      */
-    private PluginRelease getPluginReleaseFromJSON(JSONObject releaseJson) {
-        String versionString = null, releaseHTMLUrl = null;
-        try{
-            versionString = releaseJson.getString("tag_name");
-            //remove non-number characters at the beginning of the version string
-            versionString = versionString.replace("[^0-9]", "");
+    private PluginRelease getPluginReleaseFromJSON(JsonObject releaseJson) {
+        String versionString = releaseJson.get("tag_name").getAsString();
+        //remove non-number characters at the beginning of the version string
+        versionString = versionString.replace("[^0-9]", "");
             
-            releaseHTMLUrl = releaseJson.getString("html_url");
-        }catch(JSONException e){
-            this.serverLogger.log(
-                    Level.WARNING, "Caught exception while parsing JSON. Data might be corrupted while being transmitted.", e
-            );
-            return null;
-        }
+        String releaseHTMLUrl = releaseJson.get("html_url").getAsString();
         
         try{
             PluginVersion releaseVersion = new SemanticPluginVersion(versionString);
             return new PluginRelease(releaseVersion, releaseHTMLUrl);
         }catch (IllegalArgumentException e) {
-            this.serverLogger.log(
-                    Level.WARNING, "Version " + versionString + " was found, but was ignored."
-            );
+            this.serverLogger.log(Level.WARNING, "Version " + versionString + " was found, but was ignored.");
             return null;
         }
     }
@@ -152,22 +123,11 @@ public class GithubVersionManager {
      * @throws ClientProtocolException
      * @throws IOException
      */
-    public List<PluginRelease> getReleasesList() throws JSONException, ClientProtocolException, IOException{
-        JSONArray releaseJsonArray = new JSONArray(this.getReleaseJSONString());
+    public List<PluginRelease> getReleasesList() throws IOException{
+        JsonArray releaseJsonArray = this.getReleaseJSONArray();
         
         List<PluginRelease> releaseList = new ArrayList<>();
-        
-        for(int i = 0; i < releaseJsonArray.length(); i++) {
-            JSONObject releaseJson = releaseJsonArray.getJSONObject(i);
-            
-            PluginRelease release = this.getPluginReleaseFromJSON(releaseJson);
-            
-            if(release == null){
-                continue;
-            }
-            
-            releaseList.add(release);
-        }
+        releaseJsonArray.forEach(element -> releaseList.add(this.getPluginReleaseFromJSON(element.getAsJsonObject())));
         
         return releaseList;
     }
