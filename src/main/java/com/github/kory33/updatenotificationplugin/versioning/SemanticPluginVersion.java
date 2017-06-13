@@ -39,14 +39,14 @@ public class SemanticPluginVersion extends PluginVersion{
             patch = Integer.parseInt(split_versionString[2]);
         }else if(identifier_pos != -1){
             patch =  Integer.parseInt(split_versionString[2].substring(0,identifier_pos));
-        }else if(split_versionString[2].indexOf("+") != -1){
+        }else if(split_versionString[2].contains("+")){
             patch =  Integer.parseInt( split_versionString[2].substring(0, split_versionString[2].indexOf("+")));
         }
         
         identifier = null;
         buildMetadata = null;
           String buildMetadata_identifier = null;
-          if(identifier_pos != -1 || versionString.indexOf("+") != -1){
+          if(identifier_pos != -1 || versionString.contains("+")){
               buildMetadata_identifier = versionString.substring((identifier_pos != -1?identifier_pos:versionString.indexOf("+"))+1,versionString.length());
           }
         if(buildMetadata_identifier==null){
@@ -99,7 +99,7 @@ public class SemanticPluginVersion extends PluginVersion{
             return false;
         }
         if(identifier == null) {
-            return version.identifier != null;
+            return true;
         }
         String[] version_1 = identifier.split("\\.") ;
         String[] version_2 = version.identifier.split("\\.");
@@ -108,7 +108,7 @@ public class SemanticPluginVersion extends PluginVersion{
             return version_1.length == 0;
         }
         for(int i = 0; i < lim; i++){
-            boolean r = false;
+            boolean r;
             int compare = version_1[i].compareTo(version_2[i]) * -1;
             if(compare != 0) {
                 r = compare < 0;
@@ -118,8 +118,8 @@ public class SemanticPluginVersion extends PluginVersion{
                 continue;
             }
             if (version_1[i].matches("[0-9]+")!=version_2[i].matches("[0-9]+")) {
-                return version_1[i].matches("[0-9]+") == false; 
-            } else if(version_1[i].matches("[0-9]+") == true) {
+                return !version_1[i].matches("[0-9]+");
+            } else if(version_1[i].matches("[0-9]+")) {
                 int compare1 =Integer.parseInt(version_1[i]);
                 int compare2 =Integer.parseInt(version_2[i]);
                 if(compare1 != compare2) return  compare1 > compare2;        

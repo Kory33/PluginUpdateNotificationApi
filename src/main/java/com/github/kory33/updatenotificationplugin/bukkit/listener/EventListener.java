@@ -10,8 +10,8 @@ import com.github.kory33.updatenotificationplugin.bukkit.UpdateNotificationPlugi
 import com.github.kory33.updatenotificationplugin.bukkit.config.ConfigHandler;
 
 public class EventListener implements Listener {
-    private UpdateNotificationPlugin plugin;
-    private ConfigHandler configHandler;
+    private final UpdateNotificationPlugin plugin;
+    private final ConfigHandler configHandler;
 
     public EventListener(UpdateNotificationPlugin plugin, ConfigHandler cHandler) {
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
@@ -34,8 +34,6 @@ public class EventListener implements Listener {
         }else{
             this.sendUpdateStatus(joinedPlayer);
         }
-        
-        return;
     }
     
     /**
@@ -45,24 +43,15 @@ public class EventListener implements Listener {
     private void sendAsyncUpdateStatus(Player joinedPlayer) {
         BukkitScheduler scheduler = this.plugin.getServer().getScheduler();
         
-        scheduler.runTaskAsynchronously(this.plugin, new Runnable() {
-            @Override
-            public void run() {
-                EventListener.this.plugin.updateReleaseCache();
-                scheduler.scheduleSyncDelayedTask(EventListener.this.plugin, new Runnable() {
-                    @Override
-                    public void run() {
-                        EventListener.this.sendUpdateStatus(joinedPlayer);
-                    }
-                });
-            }
+        scheduler.runTaskAsynchronously(this.plugin, () -> {
+            EventListener.this.plugin.updateReleaseCache();
+            scheduler.scheduleSyncDelayedTask(EventListener.this.plugin, () -> EventListener.this.sendUpdateStatus(joinedPlayer));
         });
     }
 
     /**
      * Send the update status to the player who has joined the server
-     * @param joinedPlayer
-     * @param isUpdated
+     * @param joinedPlayer player who has joined the server
      */
     private void sendUpdateStatus(Player joinedPlayer){
         if(this.plugin.getUpdateStatus()){
@@ -72,7 +61,6 @@ public class EventListener implements Listener {
         
         if(this.configHandler.shouldLogUpToDate()){
             joinedPlayer.sendMessage(this.plugin.getUpToDatePlayerLogString());
-            return;
         }
     }
 }

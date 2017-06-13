@@ -36,12 +36,9 @@ public class GithubVersionManager {
      * This method does not have any modification of the member variable,
      * therefore it may be called from multiple threads.
      * @return reference to the latest version release
-     * @throws IOException 
-     * @throws ClientProtocolException 
-     * @throws JSONException 
      */
     public PluginRelease getLatestVersionRelease(){
-        List<PluginRelease> releaseList = null;
+        List<PluginRelease> releaseList;
 
         try{
             releaseList = this.getReleasesList();
@@ -72,7 +69,6 @@ public class GithubVersionManager {
     /**
      * Access to the Github API and get the release data.
      * @return string data received from github api
-     * @throws ClientProtocolException
      * @throws IOException
      */
     private JsonArray getReleaseJSONArray() throws IOException {
@@ -119,8 +115,6 @@ public class GithubVersionManager {
      * <p>
      * This method involves downloading data from Github.
      * @return list of releases
-     * @throws JSONException
-     * @throws ClientProtocolException
      * @throws IOException
      */
     public List<PluginRelease> getReleasesList() throws IOException{

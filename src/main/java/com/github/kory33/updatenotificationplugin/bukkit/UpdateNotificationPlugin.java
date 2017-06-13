@@ -123,7 +123,7 @@ public abstract class UpdateNotificationPlugin extends JavaPlugin {
         if(this.configHandler.shouldLogUpToDate()){
             this.getLogger().info(this.getUpToDateLogString());
         }
-    };
+    }
     
     @Override
     public void onEnable() {
