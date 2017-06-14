@@ -102,6 +102,6 @@ public class ConfigHandler {
     }
     
     private boolean shouldUseDefaultValue(String path) {
-        return this.fConfiguration == null || this.fConfiguration.contains(path);
+        return this.fConfiguration == null || !this.fConfiguration.contains(path);
     }
 }
